@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "Intro";
+}
+<main class="mainColor">
+    <div id="intro" class="imgDrago">
+        <h2 class="mb-3">Creare un personaggio</h2>
+        <p class="sectionText">
+            Il primo passo per giocare a un'avventura nel gioco <span class="parolaChiave">Pathfinder</span> è immaginare e creare un personaggio tutto tuo.
+            <br />
+            Il tuo personaggio è una combinazione di statistiche di gioco, agganci di interpretazione e della tua immaginazione.
+            Scegli una @Html.ActionLink("razza", "Razze", "Guida", new { area = "" }, new { @class = "parolaChiave" }) (come <span class="parolaChiave" onclick="redirectToUmani()">umano</span> o <span class="parolaChiave" onclick="redirectToHalfing()">halfling</span>) e una @Html.ActionLink("classe", "Classi", "Guida", new { area = "" }, new { @class = "parolaChiave" }) (come <span class="parolaChiave">guerriero</span> o <span class="parolaChiave">mago</span>).
+            Inventi anche la personalità, l'aspetto e la storia del tuo personaggio.
+            <br />
+            Una volta completato, il tuo personaggio funge da tuo rappresentante nel gioco, il tuo avatar nel mondo di Pathfinder.
+            Prima di immergerti nel costruttore del personaggio, pensa al tipo di avventuriero che vuoi interpretare.
+            Potresti essere un coraggioso combattente, un losco malandrino, un fervente <span class="parolaChiave">chierico</span> o un <span class="parolaChiave">mago</span> sfavillante.
+            Oppure potresti essere più interessato a un personaggio non convenzionale, come un furfante muscoloso che preferisce il combattimento corpo a corpo, o un tiratore scelto che colpisce i nemici da lontano.
+            Ti piace la narrativa fantasy con <span class="parolaChiave" onclick="redirectToNani()">nani</span> o <span class="parolaChiave" onclick="redirectToElfi()">elfi</span>? Prova a costruire un personaggio di una di quelle razze.
+            Vuoi che il tuo personaggio sia l'avventuriero più resistente del gruppo? Considera una classe come <span class="parolaChiave">barbaro</span> o <span class="parolaChiave">paladino</span>.
+            <br />
+            Una volta che hai in mente un personaggio, segui i passaggi in questo costruttore in ordine, facendo scelte che riflettano il personaggio che desideri.
+            La tua concezione del tuo personaggio potrebbe evolvere con ogni scelta che fai.
+            Ciò che è importante è che tu arrivi al tavolo con un personaggio che ti entusiasma interpretare.
+        </p>
+        <p class="small">P.s. Il sito è in continuo aggiornamento, non tutti i contenuti sono disponibili da subito.</p>
+    </div>
+    <div id="containerBtnIntro">
+        <div class="buttonsIntro">
+            <button onclick="redirectToPage('/Personaggi/Create')">Succ.</button>
+            <button onclick="redirectToPage('/Personaggi/Index')">Prev.</button>
+        </div>
+    </div>
+
+</main>
+
+
+

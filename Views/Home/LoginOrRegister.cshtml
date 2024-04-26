@@ -1,0 +1,99 @@
+﻿@using Pathfinder.Models
+@model Users
+
+@{
+    ViewBag.Title = "LoginOrRegister";
+}
+
+<main id="mainLoginPage" class="d-flex justify-content-center">
+    <div class="containerLogin" id="containerLogin">
+        <div class="form-container sign-up-container">
+            @using (Html.BeginForm("LoginOrRegister", "Home", FormMethod.Post, new { @class = "form-register", id = "formRegister" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <h1>Crea un account</h1>
+                if (TempData["ErrorRegister"] != null)
+                {
+                    <div style="color: #ff0000">@TempData["ErrorRegister"]</div>
+                }
+                <input type="text" placeholder="Username" name="user.Username" />
+                <input type="password" placeholder="Password" name="user.Password" />
+                <button class="btnLoginPage" type="submit" name="action" value="Register">Registrati</button>
+            }
+        </div>
+        <div class="form-container sign-in-container">
+            @using (Html.BeginForm("LoginOrRegister", "Home", FormMethod.Post, new { @class = "form-login", id = "formLogin" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <h1>Accedi</h1>
+                if (TempData["ErrorLogin"] != null)
+                {
+                    <div style="color: #ff0000">@TempData["ErrorLogin"]</div>
+                }
+                <input type="text" placeholder="Username" name="user.Username" />
+                <input type="password" placeholder="Password" name="user.Password" />
+                <button class="btnLoginPage" type="submit" name="action" value="Login">Login</button>
+            }
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>Bentornato!</h1>
+                    <p>Se ti sei già unito all'avventura, clicca qui sotto!</p>
+                    <button class="ghost btnLoginPage" id="signIn">Login</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1>Benvenuto!</h1>
+                    <p>Se sei un nuovo avventuriero, clicca qui sotto!</p>
+                    <button class="ghost btnLoginPage" id="signUp">Registrati</button>
+                </div>
+            </div>
+        </div>
+    </div>  
+
+    <div class="form-structor">
+        <div class="signup">
+            <h2 class="form-title" id="signup"><span>o</span>Crea un account!</h2>
+            @using (Html.BeginForm("LoginOrRegister", "Home", FormMethod.Post, new { id = "formRegister" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                if (TempData["ErrorRegister"] != null)
+                {
+                    <div class="errorRegister">@TempData["ErrorRegister"]</div>
+                }
+        <div class="form-holder">
+            <input type="text" placeholder="Username" name="user.Username" />
+            <input type="password" placeholder="Password" name="user.Password" />
+        </div>
+                <button class="submit-btn" type="submit" name="action" value="Register">Registrati</button>
+            }
+            </div>
+        <div class="login slide-up">
+            <div class="center">
+                <h2 class="form-title" id="login"><span>o</span>Accedi!</h2>
+                @using (Html.BeginForm("LoginOrRegister", "Home", FormMethod.Post, new { id = "formLogin" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    if (TempData["ErrorLogin"] != null)
+                    {
+                        <div class="errorLogin">@TempData["ErrorLogin"]</div>
+                    }
+            <div class="form-holder">
+                <input type="text" placeholder="Username" name="user.Username" />
+                <input type="password" placeholder="Password" name="user.Password" />
+            </div>
+            <button class="submit-btn" type="submit" name="action" value="Login">Login</button>
+                }
+            </div>
+        </div>
+    </div>
+
+</main>
+

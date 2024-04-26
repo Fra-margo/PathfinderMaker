@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<main class="mainColor">
+    <div id="imgMimic">
+        <h1 class="mb-4">Benvenuto, avventuriero!</h1>
+        <h3 class="text-center mb-5">Qui, puoi decidere cosa fare:</h3>
+    </div>    
+    <div id="divIndexPersonaggi">
+        <p class="welcome linkPersonaggi">@Html.ActionLink("Crea un nuovo personaggio", "Intro", "Personaggi", new { area = "" })</p>
+        <p class="welcome linkPersonaggi">@Html.ActionLink("Visualizza i tuoi personaggi", "PersonaggiUtente", "Personaggi", new { area = "" })</p>
+        <p class="welcome linkPersonaggi">@Html.ActionLink("Consulta la guida", "Indice", "Guida")</p>
+        <p class="welcome linkPersonaggi">@Html.ActionLink("Prova un'avventura!", "Index", "Avventura")</p>
+    </div>
+    <p class="pdfText link-1">Puoi scaricare il pdf della Scheda Personaggio ufficiale di Pathfinder: <a href="@Url.Action("DownloadPdf", "Personaggi")">cliccando qui!</a></p>
+</main>

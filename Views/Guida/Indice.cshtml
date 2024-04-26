@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "Indice";
+}
+
+    <div class="toc-wrapper">
+        <div class="toc-header">
+            <h2 class="toc-heading">Indice</h2>            
+        </div>
+        <div class="toc-list-wrapper">
+            <ul class="toc-list" id="imgBook">
+                <li class="toc-list-item">@Html.ActionLink("Punteggi di Caratteristica", "Caratteristiche", "Guida", new { area = "" })</li>
+                <li class="toc-list-item">@Html.ActionLink("Razze", "Razze", "Guida", new { area = "" })</li>
+                <li class="toc-list-item">@Html.ActionLink("Classi", "Classi", "Guida", new { area = "" })</li>
+                <li class="toc-list-item">@Html.ActionLink("Abilità", "Abilita", "Guida", new { area = "" })</li>
+                <li class="toc-list-item">@Html.ActionLink("Talenti", "Talenti", "Guida", new { area = "" })</li>
+                <li class="toc-list-item">@Html.ActionLink("Equipaggiamento", "NonDisponibile", "Home")</li>
+            </ul>
+        </div>
+    </div>    

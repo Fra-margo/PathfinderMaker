@@ -1,0 +1,297 @@
+﻿
+@{
+    ViewBag.Title = "Caratteristiche";
+}
+<section class="sectionPage">
+    <div class="sidebar">
+        <div class="nav">
+            <ul id="imgMago">
+                <li class="active">@Html.ActionLink("Punteggi di Caratteristica", "Caratteristiche", "Guida", new { area = "" })</li>
+                <li>@Html.ActionLink("Razze", "Razze", "Guida", new { area = "" })</li>
+                <li>@Html.ActionLink("Classi", "Classi", "Guida", new { area = "" })</li>
+                <li>@Html.ActionLink("Abilità", "Abilita", "Guida", new { area = "" })</li>
+                <li>@Html.ActionLink("Talenti", "Talenti", "Guida", new { area = "" })</li>
+            </ul>
+        </div>
+    </div>
+    <div class="rightContainer" id="imgScimmia">
+        <div>
+            <h1 id="caratteristica">Punteggi di Caratteristica</h1>
+            <p>
+                Ogni personaggio ha sei caratteristiche che rappresentano i suoi attributi base e costituiscono il suo talento innato e la sua bravura.
+                Anche se raramente un personaggio effettua una prova usando soltanto una sua caratteristica, i <span class="parolaChiave">Punteggi di Caratteristica</span>, ed i modificatori associati,
+                influiscono praticamente su ogni aspetto delle capacità e delle @Html.ActionLink("abilità", "Abilita", "Guida", new { area = "" }, new { @class = "parolaChiave" }) del personaggio.
+                Ogni punteggio di caratteristica in genere va da 3 a 18, anche se i bonus e le penalità razziali possano alterarli; un punteggio di caratteristica medio è 10.
+            </p>
+        </div>
+        <div>
+            <h3>Generare i Punteggi di Caratteristica</h3>
+            <p>
+                Ci sono diversi metodi differenti per generare i <span class="parolaChiave">Punteggi di Caratteristica</span>. Ciascuno di questi metodi dà un livello differente di flessibilità e di casualità alla creazione del personaggio.
+                I modificatori razziali (ossia gli aggiustamenti ai punteggi di caratteristica dati dalla razza del personaggio, vedi @Html.ActionLink("Razze", "Razze", "Guida", new {area=""}, new {@class = "parolaChiave"}) si applicano solo dopo aver generato i punteggi.
+                Il metodo più utilizza è quello <span class="parolaChiave">Standard</span>: Tirate 4d6, scartate il risultato più basso e sommate gli altri tre insieme.
+                Segnate il totale e ripetete il procedimento fino a generare sei valori. Assegnate questi totali ai vostri <span class="parolaChiave">Punteggi di Caratteristica</span> come volete.
+            </p>
+        </div>
+        <div>
+            <h3>Determinare i modificatori</h3>
+            <p>
+                Ogni caratteristica, dopo le modifiche per la razza, avrà un modificatore variabile da –5 a +5.
+                La Tabella: <span class="parolaChiave">Modificatori di Caratteristica</span> e <span class="parolaChiave">Incantesimi Bonus</span> mostra il modificatore per ogni punteggio di caratteristica.
+                Il modificatore è il numero che deve essere applicato al tiro di dado quando il personaggio tenta di compiere qualcosa di strettamente legato a quella caratteristica.
+                Il modificatore a volte si applica anche ad alcuni numeri che non sono tiri di dado. Un modificatore rappresentato da un numero positivo è un bonus, mentre quello rappresentato da un numero negativo è una penalità.
+                La tabella indica, inoltre, il numero di incantesimi bonus che il personaggio conosce se è un incantatore.
+            </p>
+            <div id="containerTabella">
+                <table class="centeredTable">
+                    <thead>
+                        <tr>
+                            <th rowspan="2">Punteggio</th>
+                            <th rowspan="2">Modificatore</th>
+                            <th colspan="9">Incantesimi bonus al giorno (per livello di incantesimo)</th>
+                        </tr>
+                        <tr>
+                            <th>1°</th>
+                            <th>2°</th>
+                            <th>3°</th>
+                            <th>4°</th>
+                            <th>5°</th>
+                            <th>6°</th>
+                            <th>7°</th>
+                            <th>8°</th>
+                            <th>9°</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>0</td>
+                            <td>1°</td>
+                            <td colspan="9">Non può lanciare incantesimi legati a questa caratteristica</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>–5</td>
+                            <td colspan="9">Non può lanciare incantesimi legati a questa caratteristica</td>
+                        </tr>
+                        <tr>
+                            <td>2–3</td>
+                            <td>–4</td>
+                            <td colspan="9">Non può lanciare incantesimi legati a questa caratteristica</td>
+                        </tr>
+                        <tr>
+                            <td>4–5</td>
+                            <td>–3</td>
+                            <td colspan="9">Non può lanciare incantesimi legati a questa caratteristica</td>
+                        </tr>
+                        <tr>
+                            <td>6–7</td>
+                            <td>–2</td>
+                            <td colspan="9">Non può lanciare incantesimi legati a questa caratteristica</td>
+                        </tr>
+                        <tr>
+                            <td>8–9</td>
+                            <td>–1</td>
+                            <td colspan="9">Non può lanciare incantesimi legati a questa caratteristica</td>
+                        </tr>
+                        <tr>
+                            <td>10–11</td>
+                            <td>0</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                        </tr>
+                        <tr>
+                            <td>12–13</td>
+                            <td>+1</td>
+                            <td>—</td>
+                            <td>1</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                        </tr>
+                        <tr>
+                            <td>14–15</td>
+                            <td>+2</td>
+                            <td>—</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                        </tr>
+                        <tr>
+                            <td>16–17</td>
+                            <td>+3</td>
+                            <td>—</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                        </tr>
+                        <tr>
+                            <td>18–19</td>
+                            <td>+4</td>
+                            <td>—</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                        </tr>
+                        <tr>
+                            <td>20</td>
+                            <td>+5</td>
+                            <td>—</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div>
+            <h3>Le Caratteristiche</h3>
+            <p>Ognuna delle caratteristiche descrive in parte il personaggio e influisce sul suo modo di agire.</p>
+            <div>
+                <h5 id="for">Forza (For)</h5>
+                <p>
+                    La <span class="parolaChiave">Forza</span> misura la prestanza e la potenza fisica del personaggio. Questa caratteristica è molto importante per <span>Guerrieri</span>, <span>Barbari</span>, <span>Paladini</span>, <span>Ranger</span> e <span>Monaci</span> poiché li aiuta ad avere la meglio nei combattimenti in mischia.
+                    Determina inoltre la quantità di <span>Equipaggiamento</span> che il personaggio può portare.
+                    Un personaggio con un punteggio di <span class="parolaChiave">Forza</span> pari a 0 è troppo debole per muoversi in alcun modo ed è privo di sensi.
+                </p>
+                <p>Il modificatore di <span class="parolaChiave">Forza</span> del personaggio si applica a:</p>
+                <ul>
+                    <li>Tiri per colpire in mischia.</li>
+                    <li>Tiri per i danni delle armi in mischia e da lancio (incluse le fionde).</li>
+                    <li>Prove di <span>Nuotare</span> e <span>Scalare</span>.</li>
+                    <li>Prove di <span>Forza</span> (per sfondare porte e simili).</li>
+                </ul>
+            </div>
+            <div>
+                <h5 id="des">Destrezza (Des)</h5>
+                <p>
+                    La <span class="parolaChiave">Destrezza</span> misura la coordinazione, l’agilità, i riflessi e l’equilibrio del personaggio.
+                    Questa caratteristica è la più importante per i <span>Ladri</span>, ma è lo anche per i personaggi che solitamente indossano armature leggere o medie o che non ne indossano nessuna,
+                    nonché per i personaggi che vogliono diventare esperti con le armi a distanza, come archi e fionde.
+                    Un personaggio con un punteggio di <span class="parolaChiave">Destrezza</span> pari a 0 è incapace di muoversi ed è effettivamente immobile (ma non privo di sensi).
+                </p>
+                <p>Il modificatore di <span class="parolaChiave">Destrezza</span> si applica a:</p>
+                <ul>
+                    <li>Tiri per colpire a distanza, come con archi, balestre, asce da lancio e altre armi a distanza, così come molti incantesimi d’attacco a distanza.</li>
+                    <li><span class="parolaChiave">Classe Armatura</span> (CA), a condizione che il personaggio abbia la possibilità di reagire all’attacco.</li>
+                    <li><span class="parolaChiave">Tiri Salvezza</span> su Riflessi per evitare attacchi che possono essere schivati muovendosi velocemente.</li>
+                    <li>Prove di <span>Acrobazia</span>, <span>Artista della Fuga</span>, <span>Cavalcare</span>, <span>Disattivare Congegni</span>, <span>Furtività</span>, <span>Rapidità di Mano</span> e <span>Volare</span>.</li>
+                </ul>
+            </div>
+            <div>
+                <h5 id="cos">Costituzione (Cos)</h5>
+                <p>
+                    La <span class="parolaChiave">Costituzione</span> rappresenta la salute e la resistenza del personaggio.
+                    Un bonus di <span class="parolaChiave">Costituzione</span> incrementa i punti ferita di un personaggio e per questo è importante per qualsiasi <span>classe</span>.
+                    Un personaggio con un punteggio di <span class="parolaChiave">Costituzione</span> pari a 0 è morto.
+                </p>
+                <p>Il modificatore di <span class="parolaChiave">Costituzione</span> si applica a:</p>
+                <ul>
+                    <li>Ogni tiro di <span class="parolaChiave">Dado Vita</span> (quantitativo di puntivita che si guadagnano all'avanzare di ogni livello').</li>
+                    <li><span class="parolaChiave">Tiri Salvezza</span> su Tempra per resistere a veleni, malattie e simili minacce.</li>
+                </ul>
+                <p>Se la <span class="parolaChiave">Costituzione</span> di un personaggio cambia abbastanza da alterare il modificatore di <span class="parolaChiave">Costituzione</span>, anche i suoi punti ferita aumentano o diminuiscono di conseguenza.</p>
+            </div>
+            <div>
+                <h5 id="int">Intelligenza (Int)</h5>
+                <p>
+                    L’<span class="parolaChiave">Intelligenza</span> determina la capacità di apprendimento e di ragionamento del personaggio.
+                    L’<span class="parolaChiave">Intelligenza</span> è importante per i <span>Maghi</span> poiché influisce sui loro incantesimi in molti modi.
+                    Le creature che hanno un istinto animale hanno un punteggio di <span class="parolaChiave">Intelligenza</span> di 1 o 2.
+                    Qualsiasi creatura in grado di capire qualcuno che parla ha un punteggio di almeno 3.
+                    Un personaggio con un punteggio pari a 0 è in stato di coma.
+                </p>
+                <p>Il modificatore di <span class="parolaChiave">Intelligenza</span> si applica a:</p>
+                <ul>
+                    <li>Il numero di linguaggi che il personaggio conosce all’inizio del gioco. Questi sono in aggiunta a qualsiasi altro linguaggio razziale di partenza e al comune.</li>
+                    <li>Il numero di gradi di @Html.ActionLink("abilità", "Abilita", "Guida", new { area = "" }, new { @class = "parolaChiave" }) acquisiti ad ogni livello. Comunque il personaggio ottiene sempre almeno 1 grado di @Html.ActionLink("abilità", "Abilita", "Guida", new { area = "" }, new { @class = "parolaChiave" }) per livello.</li>
+                    <li>Prove di <span>Artigianato</span>, <span>Conoscenze</span>, <span>Linguistica</span>, <span>Sapienza Magica</span> e <span>Valutare</span>.</li>
+                </ul>
+                <p>I <span>Maghi</span> guadagnano incantesimi bonus in base al loro punteggio di <span class="parolaChiave">Intelligenza</span>. Il punteggio minimo di <span class="parolaChiave">Intelligenza</span> necessario per lanciare un incantesimo da <span>Mago</span> è 10 + il livello dell’incantesimo.</p>
+            </div>
+            <div>
+                <h5 id="sag">Saggezza (Sag)</h5>
+                <p>
+                    La <span class="parolaChiave">Saggezza</span> indica la forza di volontà, il buon senso, la perspicacia e l’intuito del personaggio.
+                    E' la caratteristica più importante per <span>Chierici</span> e <span>Druidi</span>, ma è rilevante anche per <span>Paladini</span> e <span>Ranger</span>.
+                    Se si desidera che il proprio personaggio sia sempre attento a ciò che gli accade attorno, è necessario assegnargli un alto punteggio di <span class="parolaChiave">Saggezza</span>.
+                    Un personaggio con un punteggio di <span class="parolaChiave">Saggezza</span> pari a 0 è incapace di pensiero razionale ed è privo di sensi.
+                </p>
+                <p>Il modificatore di <span class="parolaChiave">Saggezza</span> si applica a:</p>
+                <ul>
+                    <li><span class="parolaChiave">Tiri Salvezza</span> su Volontà (per annullare gli effetti di alcuni incantesimi).</li>
+                    <li>Prove di <span>Guarire</span>, <span>Intuizione</span>, <span>Percezione</span>, <span>Professione</span> e <span>Sopravvivenza</span>.</li>
+                </ul>
+                <p>
+                    <span>Chierici</span>, <span>Druidi</span> e <span>Ranger</span> acquisiscono incantesimi bonus in base al loro punteggio di Saggezza.
+                    Il punteggio minimo di Saggezza necessario per lanciare un incantesimo da <span>Chierico</span>, <span>Druido</span> o <span>Ranger</span> è 10 + il livello dell’incantesimo.
+                </p>
+            </div>
+            <div>
+                <h5 id="car">Carisma (Car)</h5>
+                <p>
+                    Il <span class="parolaChiave">Carisma</span> misura la forza della personalità, la capacità di persuasione, il magnetismo personale, la predisposizione al comando e il fascino di un personaggio.
+                    Il <span class="parolaChiave">Carisma</span> è molto importante per <span>Paladini</span>, <span>Stregoni</span> e <span>Bardi</span>, ma anche per i <span>Chierici</span> poiché influisce sulla loro capacità di <span class="parolaChiave">Incanalare energia</span>.
+                    Un personaggio con un punteggio pari a 0 non è in grado di sforzarsi in alcun modo ed è privo di sensi.
+                </p>
+                <p>Il modificatore di <span class="parolaChiave">Carisma</span> si applica a:</p>
+                <ul>
+                    <li>Prove di <span>Addestrare Animali</span>, <span>Camuffare</span>, <span>Diplomazia</span>, <span>Intimidire</span>, <span>Intrattenere</span>, <span>Raggirare</span> e <span>Utilizzare Congegni Magici</span>.</li>
+                    <li>Prove che rappresentano il tentativo di influenzare gli altri.</li>
+                    <li><span class="parolaChiave">CD</span> (Classe Difficoltà, ovvero la difficoltà nell'eseguire un'azione che si desidera compiere) di incanalare energia</li>
+                </ul>
+                <p>
+                    <span>Bardi</span>, <span>Paladini</span> e <span>Stregoni</span> acquisiscono incantesimi bonus in base al loro punteggio di <span class="parolaChiave">Carisma</span>.
+                    Il punteggio minimo necessario per lanciare un incantesimo da <span>Bardo</span>, <span>Paladino</span> o <span>Stregone</span> è 10 + il livello dell’incantesimo.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts{
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("span").click(function () {
+                    var wordClicked = $(this).text();
+                    var targetElement = $("[data-term='" + wordClicked + "']");
+                    if (targetElement.length) {
+                        var targetOffset = targetElement.offset().top;
+                        $('html, body').animate({ scrollTop: targetOffset }, 'slow');
+                    }
+                });
+            });
+                        
+        </script>
+        }

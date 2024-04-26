@@ -1,0 +1,527 @@
+﻿@model Pathfinder.Models.Personaggi
+@{
+    ViewBag.Title = "SecondaParte";
+}
+
+<section class="sectionPage">
+    <div class="leftContainer">
+        <div class="detailsContainer">
+            <h4>Scheda Personaggio</h4>
+
+            <div class="form-group">
+                <label>Nome:</label>
+                <input type="text" class="form-control" value="@Model.Nome" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>PuntiVita:</label>
+                <input type="text" class="form-control" value="@Model.PuntiVita" id="puntiVita" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Livello:</label>
+                <input type="text" class="form-control" value="@Model.Livello" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Razza:</label>
+                <input type="text" class="form-control" value="@Model.Razze.Tipologia" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Classe:</label>
+                <input type="text" class="form-control" value="@Model.Classi.Nome" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>BonusAttaccoBase:</label>
+                <input type="text" class="form-control" id="bonusAttaccoBase" value="@Model.Classi.BonusAttaccoBase" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Forza:</label>
+                <input type="text" class="form-control" id="forza" value="@Model.Forza" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Destrezza:</label>
+                <input type="text" class="form-control" value="@Model.Destrezza" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Costituzione:</label>
+                <input type="text" class="form-control" value="@Model.Costituzione" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Intelligenza:</label>
+                <input type="text" class="form-control" value="@Model.Intelligenza" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Saggezza:</label>
+                <input type="text" class="form-control" id="saggezza" value="@Model.Saggezza" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Carisma:</label>
+                <input type="text" class="form-control" value="@Model.Carisma" readonly />
+            </div>
+        </div>
+    </div>
+    <div class="rightContainer avventuraText">
+        <div>
+            <h3 id="inizio">Scuderia Buona Sorte</h3>
+            <p id="testoIniziale"></p>
+            <div id="divScelte" style="display:none;">
+                <button id="vaiSinistra" onclick="vaiSinistra()" class="btnScelte">Vai a sinistra</button>
+                <button id="vaiDestra" onclick="vaiDestra()" class="btnScelte">Ti avvicini alla grata</button>
+            </div>
+            <div id="risultatoScelta"></div>
+        </div>
+    </div>
+</section>
+
+@section scripts{
+    <script type="text/javascript">
+        var testoDaAggiungere = "Superati i cani, noti sulla sinistra due porte aperte, mentre sulla tua destra, c'è una grata di ferro che blocca l'ingresso di un corridoio. Cosa fai?";
+        var currentIndex = 0;
+
+        function aggiungiLettera() {
+            var testoIniziale = document.getElementById("testoIniziale");
+            testoIniziale.textContent += testoDaAggiungere[currentIndex++];
+            if (currentIndex < testoDaAggiungere.length) {
+                setTimeout(aggiungiLettera, 10);
+            } else {
+                document.getElementById("divScelte").style.display = "flex";
+            }
+        }
+        aggiungiLettera();
+
+        function effettoDigitazione(elemento, testo, index, velocita, callback) {
+            if (index < testo.length) {
+                elemento.textContent += testo.charAt(index);
+                index++;
+                setTimeout(function () {
+                    effettoDigitazione(elemento, testo, index, velocita, callback);
+                }, velocita);
+            } else {
+                if (callback) {
+                    callback();
+                }
+            }
+        }
+        function letteraPerLettera(elemento, testo, velocita, callback) {
+            effettoDigitazione(elemento, testo, 0, velocita, callback);
+        }
+
+        var grataSfondata = false;
+        var provaSfondare = false;
+        var provaPareteDaSfondare = false;
+        var provaDiPercezione = false;
+
+        function vaiDestra() {
+            if (provaPareteDaSfondare == true) {
+                var nuovoTesto = document.createElement("p");
+                nuovoTesto.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+                letteraPerLettera(nuovoTesto, "Ti avvicini alla grata in ferro. Ai tempi in cui la Scuderia era un mattatoio, le creature venivano fatte entrare in questo stretto corridoio e quindi bloccate, con la testa che spuntava dalla grata. In fondo al corridoio, si può notare sulla destra, quella che un tempo era una porta segreta.", 10, function () {
+                    var nuovoDiv = document.createElement("div");
+                    nuovoDiv.className = "divBtnScelte"
+
+                    var nuovoBottone = document.createElement("button");
+                    nuovoBottone.textContent = "Prova a sfondare la grata (FOR)";
+                    nuovoBottone.className = "btnScelte";
+                    nuovoBottone.onclick = function () {
+                        sfondare();
+                        nuovoBottone.style.display = "none";
+                        nuovoBottone2.style.display = "none";
+                    };
+                    nuovoDiv.appendChild(nuovoBottone);
+
+                    var nuovoBottone2 = document.createElement("button");
+                    nuovoBottone2.textContent = "Torna alla parete rovinata";
+                    nuovoBottone2.className = "btnScelte";
+                    nuovoBottone2.onclick = function () {
+                        pareteDaSfondare();
+                        nuovoBottone.style.display = "none";
+                        nuovoBottone2.style.display = "none";
+                    };
+                    nuovoDiv.appendChild(nuovoBottone2);
+
+                    document.getElementById("risultatoScelta").appendChild(nuovoDiv);
+                });
+            } else {
+                var nuovoTesto = document.createElement("p");
+                nuovoTesto.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+                letteraPerLettera(nuovoTesto, "Ti avvicini alla grata in ferro. Ai tempi in cui la Scuderia era un mattatoio, le creature venivano fatte entrare in questo stretto corridoio e quindi bloccate, con la testa che spuntava dalla grata. In fondo al corridoio, si può notare sulla destra, quella che un tempo era una porta segreta.", 10, function () {
+                    var nuovoDiv = document.createElement("div");
+                    nuovoDiv.className = "divBtnScelte"
+
+                    var nuovoBottone = document.createElement("button");
+                    nuovoBottone.textContent = "Prova a sfondare la grata (FOR)";
+                    nuovoBottone.className = "btnScelte";
+                    nuovoBottone.onclick = function () {
+                        sfondare();
+                        nuovoBottone.style.display = "none";
+                        nuovoBottone2.style.display = "none";
+                    };
+                    nuovoDiv.appendChild(nuovoBottone);
+
+                    var nuovoBottone2 = document.createElement("button");
+                    nuovoBottone2.textContent = "Avvicinati alle due porte a sinistra";
+                    nuovoBottone2.className = "btnScelte";
+                    nuovoBottone2.onclick = function () {
+                        vaiSinistra();
+                        nuovoBottone.style.display = "none";
+                        nuovoBottone2.style.display = "none";
+                    };
+                    nuovoDiv.appendChild(nuovoBottone2);
+
+                    document.getElementById("risultatoScelta").appendChild(nuovoDiv);
+                });
+            }            
+            document.getElementById("vaiSinistra").style.display = "none";
+            document.getElementById("vaiDestra").style.display = "none";
+        }        
+
+        function sfondare() {
+            var forza = parseInt(document.getElementById("forza").value);
+            var modificatore = Math.floor((forza - 10) / 2);
+
+            var dado = Math.floor(Math.random() * 20) + 1;
+            var valoreProva = dado + modificatore;
+
+            if (valoreProva >= 18) {
+                var nuovoTesto = document.createElement("p");
+                nuovoTesto.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+                letteraPerLettera(nuovoTesto, "Con una spallata possente, sei riuscito a sfondare la grata e ti ritrovi già dentro il corridoio.", 10, function () {
+                    var nuovoDiv = document.createElement("div");
+                    nuovoDiv.className = "divBtnScelte"
+
+                    var nuovoBottone = document.createElement("button");
+                    nuovoBottone.textContent = "Ti avvicini alla porta in fondo al corridoio";
+                    nuovoBottone.className = "btnScelte";
+                    nuovoBottone.onclick = function () {
+                        vaiLaboratorio();
+                        nuovoBottone.style.display = "none";
+                        nuovoBottone2.style.display = "none";
+                    };
+                    nuovoDiv.appendChild(nuovoBottone);
+
+                    var nuovoBottone2 = document.createElement("button");
+                    nuovoBottone2.textContent = "Torni indietro per controllare anche le due porte";
+                    nuovoBottone2.className = "btnScelte";
+                    nuovoBottone2.onclick = function () {
+                        vaiSinistra();
+                        nuovoBottone.style.display = "none";
+                        nuovoBottone2.style.display = "none";
+                    };
+                    nuovoDiv.appendChild(nuovoBottone2);
+
+                    document.getElementById("risultatoScelta").appendChild(nuovoDiv);
+                    grataSfondata = true;
+                });
+            } else {
+                if (provaDiPercezione == false) {
+                    var nuovoTesto = document.createElement("p");
+                    nuovoTesto.textContent = "";
+                    document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+                    letteraPerLettera(nuovoTesto, "Provi a dare più colpi contro la grata sperando che si apra, ma nulla. Magari potresti cercare una soluzione in giro.", 10, function () {
+                        var nuovoBottone = document.createElement("button");
+                        nuovoBottone.textContent = "Avvicinati alle due porte a sinsitra";
+                        nuovoBottone.className = "btnScelte";
+                        nuovoBottone.onclick = function () {
+                            vaiSinistra();
+                            this.style.display = "none";
+                        };
+                        document.getElementById("risultatoScelta").appendChild(nuovoBottone);
+                        grataSfondata = false;
+                    });
+                } else {
+                    var nuovoTesto = document.createElement("p");
+                    nuovoTesto.textContent = "";
+                    document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+                    letteraPerLettera(nuovoTesto, "Provi a dare più colpi contro la grata sperando che si apra, ma nulla. Magari potresti cercare una soluzione in giro.", 10, function () {
+                        var nuovoBottone = document.createElement("button");
+                        nuovoBottone.textContent = "Avvicinati alle parete deteriorata";
+                        nuovoBottone.className = "btnScelte";
+                        nuovoBottone.onclick = function () {
+                            pareteDaSfondare();
+                            this.style.display = "none";
+                        };
+                        document.getElementById("risultatoScelta").appendChild(nuovoBottone);
+                        grataSfondata = false;
+                    });
+                }              
+            }
+            provaSfondare = true;
+        }
+
+        function vaiSinistra() {
+            var nuovoTesto = document.createElement("p");
+            nuovoTesto.textContent = "";
+            document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+            letteraPerLettera(nuovoTesto, "Ti avvicini alle due porte e noti che ci sono due uffici. Gli uffici contengono una vecchia scrivania, una sedia e qualche armadio.", 10, function () {
+                if (grataSfondata == false && provaSfondare == false) {
+                    var nuovoDiv = document.createElement("div");
+                    nuovoDiv.className = "divBtnScelte"
+
+                    var nuovoBottone = document.createElement("button");
+                    nuovoBottone.textContent = "Cerca qualcosa di interessante (Percezione - SAG)";
+                    nuovoBottone.className = "btnScelte";
+                    nuovoBottone.onclick = function () {
+                        provaPercezione();
+                        nuovoBottone.style.display = "none";
+                        nuovoBottone2.style.display = "none";
+                    };
+                    nuovoDiv.appendChild(nuovoBottone);
+
+                    var nuovoBottone2 = document.createElement("button");
+                    nuovoBottone2.textContent = "Vai a destra, vicino alla grata";
+                    nuovoBottone2.className = "btnScelte";
+                    nuovoBottone2.onclick = function () {
+                        vaiDestra();
+                        nuovoBottone.style.display = "none";
+                        nuovoBottone2.style.display = "none";
+                    };
+                    nuovoDiv.appendChild(nuovoBottone2);
+
+                    document.getElementById("risultatoScelta").appendChild(nuovoDiv);
+
+                } else if (grataSfondata == false && provaSfondare == true) {
+                    var nuovoBottone = document.createElement("button");
+                    nuovoBottone.textContent = "Cerca qualcosa di interessante (Percezione - SAG)";
+                    nuovoBottone.className = "btnScelte";
+                    nuovoBottone.onclick = function () {
+                        provaPercezione();
+                        this.style.display = "none";
+                    };
+                    document.getElementById("risultatoScelta").appendChild(nuovoBottone);
+                } else {
+                    var nuovoDiv = document.createElement("div");
+                    nuovoDiv.className = "divBtnScelte";
+
+                    var nuovoBottone = document.createElement("button");
+                    nuovoBottone.textContent = "Cerca qualcosa di interessante (Percezione - SAG)";
+                    nuovoBottone.className = "btnScelte";
+                    nuovoBottone.onclick = function () {
+                        provaPercezione();
+                        nuovoBottone.style.display = "none";
+                        nuovoBottone2.style.display = "none";
+                    };
+                    nuovoDiv.appendChild(nuovoBottone);
+
+                    var nuovoBottone2 = document.createElement("button");
+                    nuovoBottone2.textContent = "Torna alla porta in fondo al corridoio";
+                    nuovoBottone2.className = "btnScelte";
+                    nuovoBottone2.onclick = function () {
+                        vaiLaboratorio();
+                        nuovoBottone.style.display = "none";
+                        nuovoBottone2.style.display = "none";
+                    };
+                    nuovoDiv.appendChild(nuovoBottone2);
+
+                    document.getElementById("risultatoScelta").appendChild(nuovoDiv);
+                }         
+            });
+            document.getElementById("vaiSinistra").style.display = "none";
+            document.getElementById("vaiDestra").style.display = "none";
+        }
+
+        chiaveGrata = false;
+
+        function provaPercezione() {
+            var saggezza = parseInt(document.getElementById("saggezza").value);
+            var modificatore = Math.floor((saggezza - 10) / 2);
+
+            var dado = Math.floor(Math.random() * 20) + 1;
+            var valoreProva = dado + modificatore;
+
+            if (valoreProva >= 15) {
+                var nuovoTesto = document.createElement("p");
+                nuovoTesto.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+                letteraPerLettera(nuovoTesto, "Cercando tra le vecchie cartacce e nei cassetti delle scrivanie, trovi un'anello d'oro dal valore di circa 100 monete d'oro e una vecchia chiave che molto probabilmente apre la grata di ferro. Non sembra ci sia altro d'interesse.", 10, function () {
+                    if (grataSfondata == false) {
+                        var nuovoBottone = document.createElement("button");
+                        nuovoBottone.textContent = "Prova ad aprire la grata con la chiave";
+                        nuovoBottone.className = "btnScelte";
+                        nuovoBottone.onclick = function () {
+                            aprireGrata();
+                            this.style.display = "none";
+                        };
+                        document.getElementById("risultatoScelta").appendChild(nuovoBottone)
+                    } else {
+                        var nuovoBottone = document.createElement("button");
+                        nuovoBottone.textContent = "Torna al corridoio";
+                        nuovoBottone.className = "btnScelte";
+                        nuovoBottone.onclick = function () {
+                            nuovoBottone.style.display = "none";
+                            var nuovoTesto = document.createElement("p");
+                            nuovoTesto.textContent = "";
+                            document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+                            letteraPerLettera(nuovoTesto, "Torni nel corridoio e ti avvicini alla porta in fondo", 10, function () {
+                                var nuovoBottone2 = document.createElement("button");
+                                nuovoBottone2.className = "btnScelte";
+                                nuovoBottone2.onclick = function () {
+                                    vaiLaboratorio();
+                                    nuovoBottone2.style.display = "none";
+                                };
+                                document.getElementById("risultatoScelta").appendChild(nuovoBottone2)
+                            })
+                        };
+                        document.getElementById("risultatoScelta").appendChild(nuovoBottone)
+                    };
+                    chiaveGrata = true;
+                });
+            } else {
+                var nuovoTesto = document.createElement("p");
+                nuovoTesto.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+                letteraPerLettera(nuovoTesto, "Non trovi nulla che possa saltare all'occhio. Mentre rovisti tra le scartoffie e tra i vari mobili impolverati, Rexus ti chiama e ti fa notare che nella parte sudest della Scuderia, la malta della parete si è deteriorata fin quasi a cedere del tutto.", 10, function () {
+                    if (grataSfondata == false && provaSfondare == true) {
+                        var nuovoBottone = document.createElement("button");
+                        nuovoBottone.textContent = "Ti avvicini alla parete e provi a farla crollare (For)";
+                        nuovoBottone.className = "btnScelte";
+                        nuovoBottone.onclick = function () {
+                            sfondareParete();
+                            this.style.display = "none";
+                        };
+                        document.getElementById("risultatoScelta").appendChild(nuovoBottone)
+                    } else {
+                        var nuovoDiv = document.createElement("div");
+                        nuovoDiv.className = "divBtnScelte";
+
+                        var nuovoBottone = document.createElement("button");
+                        nuovoBottone.textContent = "Ti avvicini alla parete e provi a farla crollare (For)";
+                        nuovoBottone.className = "btnScelte";
+                        nuovoBottone.onclick = function () {
+                            sfondareParete();
+                            nuovoBottone.style.display = "none";
+                            nuovoBottone2.style.display = "none";
+                        };
+                        nuovoDiv.appendChild(nuovoBottone);
+
+                        var nuovoBottone2 = document.createElement("button");
+                        nuovoBottone2.textContent = "Torna vicino la grata";
+                        nuovoBottone2.className = "btnScelte";
+                        nuovoBottone2.onclick = function () {
+                            vaiDestra();
+                            nuovoBottone.style.display = "none";
+                            nuovoBottone2.style.display = "none";
+                        };
+                        nuovoDiv.appendChild(nuovoBottone2);
+
+                        document.getElementById("risultatoScelta").appendChild(nuovoDiv);
+                    }                    
+                });
+            }
+            provaPareteDaSfondare = true;
+            provaDiPercezione = true;
+        }
+
+        function pareteDaSfondare() {
+            var nuovoTesto = document.createElement("p");
+            nuovoTesto.textContent = "";
+            document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+            letteraPerLettera(nuovoTesto, "Torni davanti alla parete deteriorata.", 10, function () {
+                var nuovoDiv = document.createElement("div");
+                nuovoDiv.className = "divBtnScelte";
+
+                var nuovoBottone = document.createElement("button");
+                nuovoBottone.textContent = "Ti avvicini alla parete e provi a farla crollare (For)";
+                nuovoBottone.className = "btnScelte";
+                nuovoBottone.onclick = function () {
+                    sfondareParete();
+                    nuovoBottone.style.display = "none";
+                    nuovoBottone2.style.display = "none";
+                };
+                nuovoDiv.appendChild(nuovoBottone);
+
+                var nuovoBottone2 = document.createElement("button");
+                nuovoBottone2.textContent = "Torna vicino la grata";
+                nuovoBottone2.className = "btnScelte";
+                nuovoBottone2.onclick = function () {
+                    vaiDestra();
+                    nuovoBottone.style.display = "none";
+                    nuovoBottone2.style.display = "none";
+                };
+                nuovoDiv.appendChild(nuovoBottone2);
+
+                document.getElementById("risultatoScelta").appendChild(nuovoDiv);
+            })
+        }
+
+        function aprireGrata() {
+            var nuovoTesto = document.createElement("p");
+            nuovoTesto.textContent = "";
+            document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+            letteraPerLettera(nuovoTesto, "Giri la chiave dentro la serratura e la grata si apre.", 10, function () {
+                var nuovoBottone = document.createElement("button");
+                nuovoBottone.textContent = "Ti avvicini alla porta in fondo al corridoio";
+                nuovoBottone.className = "btnScelte";
+                nuovoBottone.onclick = function () {
+                    vaiLaboratorio();
+                    this.style.display = "none";
+                };
+                document.getElementById("risultatoScelta").appendChild(nuovoBottone)
+            });
+        }
+
+        function sfondareParete() {
+            var forza = parseInt(document.getElementById("forza").value);
+            var modificatore = Math.floor((forza - 10) / 2);
+
+            var dado = Math.floor(Math.random() * 20) + 1;
+            var valoreProva = dado + modificatore;
+            if (valoreProva >= 12) {
+                var nuovoTesto = document.createElement("p");
+                nuovoTesto.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+                letteraPerLettera(nuovoTesto, "Ti metti con tutta la forza a spingere la parete e con non molta fatica, crolla giù", 10, function () {
+                    var nuovoBottone = document.createElement("button");
+                    nuovoBottone.textContent = "Esplora la stanza";
+                    nuovoBottone.className = "btnScelte";
+                    nuovoBottone.onclick = function () {
+                        vaiLaboratorio();
+                        this.style.display = "none";
+                    };
+                    document.getElementById("risultatoScelta").appendChild(nuovoBottone)
+                });
+            } else {
+                var nuovoTesto = document.createElement("p");
+                nuovoTesto.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+                letteraPerLettera(nuovoTesto, "Provi a mettere tutta la forza, ma il muro sembra resistere. Rexus decide di darti una mano e in due provate nuovamente a spingere la parete, finchè quest'ultima cade giù.", 10, function () {
+                    var nuovoBottone = document.createElement("button");
+                    nuovoBottone.textContent = "Esplora la stanza";
+                    nuovoBottone.className = "btnScelte";
+                    nuovoBottone.onclick = function () {
+                        vaiLaboratorio();
+                        this.style.display = "none";
+                    };
+                    document.getElementById("risultatoScelta").appendChild(nuovoBottone)
+                });
+            }
+        }
+
+        function vaiLaboratorio() {
+            var nuovoTesto = document.createElement("p");
+            nuovoTesto.textContent = "";
+            document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+            letteraPerLettera(nuovoTesto, "Entri dentro la stanza. Questo vecchio laboratorio ospita numerosi vecchi utensili da macellaio, attrezzture da veterinario e strumenti per lavorare il legno, tutti ricoperti da uno spesso strato di polvere, solcato da tracce che descrivono strani motivi. Pesanti magli, corde sfilacciate e arnesi per tenere bloccati gli animali sono appesi ai ganci sui muri o sono appoggiati sui tavoli sghembi. A sudovest c'è una botola tenuta socchiusa da un pezzo di legno.", 10, function () {
+                var nuovoBottone = document.createElement("button");
+                nuovoBottone.textContent = "Apri la botola";
+                nuovoBottone.className = "btnScelte";
+                nuovoBottone.onclick = function () {
+                    window.location.href = "TerzaParte?idPg=@Model.IdPg#inizio";
+                };
+                document.getElementById("risultatoScelta").appendChild(nuovoBottone)
+            })
+        }
+
+    </script>
+    }

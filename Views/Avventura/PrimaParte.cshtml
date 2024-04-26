@@ -1,0 +1,224 @@
+﻿@model Pathfinder.Models.Personaggi
+@{
+    ViewBag.Title = "PrimaParte";
+}
+
+<section class="sectionPage">
+    <div class="leftContainer">
+        <div class="detailsContainer">
+            <h4>Scheda Personaggio</h4>
+
+            <div class="form-group">
+                <label>Nome:</label>
+                <input type="text" class="form-control" value="@Model.Nome" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>PuntiVita:</label>
+                <input type="text" class="form-control" value="@Model.PuntiVita" id="puntiVita" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Livello:</label>
+                <input type="text" class="form-control" value="@Model.Livello" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Razza:</label>
+                <input type="text" class="form-control" value="@Model.Razze.Tipologia" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Classe:</label>
+                <input type="text" class="form-control" value="@Model.Classi.Nome" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>BonusAttaccoBase:</label>
+                <input type="text" class="form-control" id="bonusAttaccoBase" value="@Model.Classi.BonusAttaccoBase" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Forza:</label>
+                <input type="text" class="form-control" id="forza" value="@Model.Forza" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Destrezza:</label>
+                <input type="text" class="form-control" value="@Model.Destrezza" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Costituzione:</label>
+                <input type="text" class="form-control" value="@Model.Costituzione" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Intelligenza:</label>
+                <input type="text" class="form-control" value="@Model.Intelligenza" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Saggezza:</label>
+                <input type="text" class="form-control" value="@Model.Saggezza" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Carisma:</label>
+                <input type="text" class="form-control" value="@Model.Carisma" readonly />
+            </div>
+        </div>
+    </div>
+    <div class="rightContainer avventuraText" id="rightContainer">
+        <div>
+            <h3 id="inizio">Scuderia Buona Sorte</h3>
+            <p id="testoIniziale"></p>
+            <div id="divScelte" style="display:none;">
+                <button id="calmaAnimaliButton" onclick="calmaAnimali()" data-carisma="@Model.Carisma" class="btnScelte">Prova a calmare gli animali (Addestrare Aninali - CAR)</button>
+                <button id="attaccaAnimaliButton" onclick="attaccaAnimali()" class="btnScelte">Estrai l'arma ed inizi ad attaccare</button>
+            </div>
+            <div id="risultatoScelta"></div>
+        </div>
+    </div>    
+</section>
+
+@section scripts{
+    <script type="text/javascript">
+        var testoDaAggiungere = "Dopo aver camminato per quasi un'ora, tu e il tuo nuovo amico Rexus, vi ritrovare di fronte alla Scuderia Buona Sorte, un tempo rifugio segreto dei Corvi d'Argento. Rexus sa che ci sono delle stanze nascoste, dove al loro interno, ci sono informazioni utili alla ribellione e tesori nascosti. Una volta all'interno, si nota che questa vecchia stalla pende leggermente da un lato, il suo tetto sorretto in modo precario da mura di legno che mostrano i segni dell'età. L'aria puzza di urina rancida. Scrivanie rotte, tavoli scorticati e sedie squarciate sono ammassati nelle tredici poste da cavalli, che sono tutte coperte da uno spesso strato di polvere. Un'alcova chiusa da una grata lungo la parete sudorientale sembra contenere gli unici oggetti relativamente intatti. In fondo alla stanza, si nota la presenza di un piccolo branco di cani selvatici; l'esemplare più grosso è un mastino che accortosi della vostra presenza, inizia a ringhiare, allarmando anche i due cani più piccoli, che si mostrano molto minacciosi nei vostri confronti. Cosa decidi di fare?";
+
+        var currentIndex = 0;
+
+        function aggiungiLettera() {
+            var testoIniziale = document.getElementById("testoIniziale");
+            testoIniziale.textContent += testoDaAggiungere[currentIndex++];
+            if (currentIndex < testoDaAggiungere.length) {
+                setTimeout(aggiungiLettera, 10);
+            } else {
+                document.getElementById("divScelte").style.display = "flex";
+            }
+        }
+
+        aggiungiLettera();
+
+        function effettoDigitazione(elemento, testo, index, velocita, callback) {
+            if (index < testo.length) {
+                elemento.textContent += testo.charAt(index);
+                index++;
+                setTimeout(function () {
+                    effettoDigitazione(elemento, testo, index, velocita, callback);
+                }, velocita);
+            } else {
+                if (callback) {
+                    callback();
+                }
+            }
+        }
+        function letteraPerLettera(elemento, testo, velocita, callback) {
+            effettoDigitazione(elemento, testo, 0, velocita, callback);
+        }
+
+        function calmaAnimali() {
+            var carisma = parseInt(document.getElementById("calmaAnimaliButton").getAttribute("data-carisma"));
+            var modificatore = Math.floor((carisma - 10) / 2);
+
+            var dado = Math.floor(Math.random() * 20) + 1;
+            var valoreProva = dado + modificatore;
+            if (valoreProva >= 15) {
+                var nuovoTesto = document.createElement("p");
+                nuovoTesto.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+                letteraPerLettera(nuovoTesto, "Decidi di provare a calmare gli animali. Dopo alcuni tentativi pazienti, gli animali sembrano rilassarsi e allontanarsi da voi, permettendovi di continuare l'esplorazione della scuderia.", 10, function() {
+                    var nuovoBottone = document.createElement("button");
+                    nuovoBottone.textContent = "Continua l'esplorazione";
+                    nuovoBottone.className = "btnScelte";
+                    nuovoBottone.onclick = function () {
+                        window.location.href = "SecondaParte?idPg=@Model.IdPg#inizio";
+                    };
+                    document.getElementById("risultatoScelta").appendChild(nuovoBottone);
+                });
+            } else {
+                var nuovoTesto = document.createElement("p");
+                nuovoTesto.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+                letteraPerLettera(nuovoTesto, "Decidi di provare a calmare gli animali, ma non riesci ad ottenere la loro fiducia. Il mastino prende posizione e avanza verso di voi!", 10, function() {
+                    var nuovoBottone = document.createElement("button");
+                    nuovoBottone.textContent = "E' il momento di attaccare!";
+                    nuovoBottone.className = "btnScelte";
+                    nuovoBottone.onclick = function () {
+                        attacco();
+                        this.style.display = "none";
+                    };
+                    document.getElementById("risultatoScelta").appendChild(nuovoBottone)
+                });
+            }
+
+            document.getElementById("calmaAnimaliButton").style.display = "none";
+            document.getElementById("attaccaAnimaliButton").style.display = "none";
+        }
+
+        function attaccaAnimali() {
+            var nuovoTesto = document.createElement("p");
+            nuovoTesto.textContent = "";
+            document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+            letteraPerLettera(nuovoTesto, "Decidi di attaccare gli animali. Il mastino fà un balzo in avanti verso di voi!", 10, function() {
+                var nuovoBottone = document.createElement("button");
+                nuovoBottone.textContent = "E' il momento di attaccare!";
+                nuovoBottone.className = "btnScelte";
+                nuovoBottone.onclick = function () {
+                    attacco();
+                    this.style.display = "none";
+                };
+                document.getElementById("risultatoScelta").appendChild(nuovoBottone)
+            });
+            document.getElementById("calmaAnimaliButton").style.display = "none";
+            document.getElementById("attaccaAnimaliButton").style.display = "none";
+        }
+
+        function attacco() {
+            var bonusAttaccoBase = parseInt(document.getElementById("bonusAttaccoBase").value);
+            var forza = parseInt(document.getElementById("forza").value);
+            var modificatore = Math.floor((forza - 10) / 2);
+
+            var dado = Math.floor(Math.random() * 20) + 1;
+            var valoreProva = dado + bonusAttaccoBase + modificatore;
+            var risultatoScelta = document.getElementById("risultatoScelta");
+
+            if (valoreProva >= 13) {
+                var dadoAttacco = Math.floor(Math.random() * 8) + 1;
+                var danno = dadoAttacco + modificatore;
+                var testo = "";
+                if (danno >= 13) {
+                    testo = "Con un colpo diretto forte e preciso, hai colpito il mastino che si accascia lentamente a terra. Gli altri due cani, in preda al terrore, iniziano a scappare infilandosi tra le assi di legno crollate sulla porta sul retro.";
+                } else {
+                    testo = "Colpisci il mastino, che incassa il colpo, ma è ancora minaccioso! Rexus però, molto velocemente riesce a colpire il cane prima che esso possa reagire. Il mastino, colpito, si accascia lentamente a terra. Gli altri due cani, in preda al terrore, iniziano a scappare infilandosi tra le assi di legno crollate sulla porta sul retro.";
+                }
+                var nuovoTesto = document.createElement("p");
+                nuovoTesto.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+                letteraPerLettera(nuovoTesto, testo, 10, function () {
+                    var nuovoBottone = document.createElement("button");
+                    nuovoBottone.textContent = "Continua l'esplorazione";
+                    nuovoBottone.className = "btnScelte";
+                    nuovoBottone.onclick = function () {
+                        window.location.href = "SecondaParte?idPg=@Model.IdPg#inizio";
+                    };
+                    risultatoScelta.appendChild(nuovoBottone);
+                });
+            } else {
+                var nuovoTesto = document.createElement("p");
+                nuovoTesto.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+                letteraPerLettera(nuovoTesto, "Provi a colpire il mastino, ma il cane schiva l'attacco. Il mastino prova a saltare verso di te, ma Rexus, molto velocemente riesce a colpire il cane prima che esso possa reagire. Il mastino, colpito, si accascia lentamente a terra. Gli altri due cani, in preda al terrore, iniziano a scappare infilandosi tra le assi di legno crollate sulla porta sul retro.", 10, function () {
+                    var nuovoBottone = document.createElement("button");
+                    nuovoBottone.textContent = "Continua l'esplorazione";
+                    nuovoBottone.className = "btnScelte";
+                    nuovoBottone.onclick = function () {
+                        window.location.href = "SecondaParte?idPg=@Model.IdPg#inizio";
+                    };
+                    risultatoScelta.appendChild(nuovoBottone);
+                });
+            }
+        }
+    </script>
+    }
+

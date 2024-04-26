@@ -1,0 +1,862 @@
+﻿@model Pathfinder.Models.Personaggi
+@{
+    ViewBag.Title = "TerzaParte";
+}
+
+<section class="sectionPage">
+    <div class="leftContainer">
+        <div class="detailsContainer">
+            <h4>Scheda Personaggio</h4>
+
+            <div class="form-group">
+                <label>Nome:</label>
+                <input type="text" class="form-control" value="@Model.Nome" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>PuntiVita:</label>
+                <input type="text" class="form-control" value="@Model.PuntiVita" id="puntiVita" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Livello:</label>
+                <input type="text" class="form-control" value="@Model.Livello" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Razza:</label>
+                <input type="text" class="form-control" value="@Model.Razze.Tipologia" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Classe:</label>
+                <input type="text" class="form-control" value="@Model.Classi.Nome" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>BonusAttaccoBase:</label>
+                <input type="text" class="form-control" id="bonusAttaccoBase" value="@Model.Classi.BonusAttaccoBase" readonly />
+                <input type="hidden" id="tsTempra" value="@Model.Classi.TSTempra" />
+            </div>
+
+            <div class="form-group">
+                <label>Forza:</label>
+                <input type="text" class="form-control" id="forza" value="@Model.Forza" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Destrezza:</label>
+                <input type="text" class="form-control" id="destrezza" value="@Model.Destrezza" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Costituzione:</label>
+                <input type="text" class="form-control" value="@Model.Costituzione" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Intelligenza:</label>
+                <input type="text" class="form-control" id="intelligenza" value="@Model.Intelligenza" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Saggezza:</label>
+                <input type="text" class="form-control" id="saggezza" value="@Model.Saggezza" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Carisma:</label>
+                <input type="text" class="form-control" value="@Model.Carisma" readonly />
+            </div>
+        </div>
+    </div>
+    <div class="rightContainer avventuraText">
+        <div>
+            <h3 id="inizio">Scuderia Buona Sorte</h3>
+            <p id="testoIniziale"></p>
+            <div id="divScelte" style="display:none;">
+                <button id="combattimentoRatti" onclick="combattimentoRatti()" class="btnScelte">E' il momento di combattere!</button>
+            </div>
+            <div id="risultatoScelta"></div>
+        </div>
+    </div>
+</section>
+
+@section scripts{
+    <script>
+        var testoDaAggiungere = "Aperta la botola, noti un pozzo profondo circa 5 metri in cui è presente una scala che scende. Una volta sceso, la puzza d'urina e feci che aleggia in questa grande stanza fa lacrimare gli occhi. Lungo le pareti si susseguono nidi fatti con pezzi rosicchiati di casse e botti, mentre coltelli e ganci arrugginiti ricoprono i piani dei tavoli. Appena avuto il tempo di percepire cosa c'è intorno alla stanza, sbucano da dietro le casse, tre ratti famelici che attaccano a vista.";
+        var currentIndex = 0;
+
+        function aggiungiLettera() {
+            var testoIniziale = document.getElementById("testoIniziale");
+            testoIniziale.textContent += testoDaAggiungere[currentIndex++];
+            if (currentIndex < testoDaAggiungere.length) {
+                setTimeout(aggiungiLettera, 10);
+            } else {
+                document.getElementById("divScelte").style.display = "flex";
+            }
+        }
+
+        aggiungiLettera();
+
+        function effettoDigitazione(elemento, testo, index, velocita, callback) {
+            if (index < testo.length) {
+                elemento.textContent += testo.charAt(index);
+                index++;
+                setTimeout(function () {
+                    effettoDigitazione(elemento, testo, index, velocita, callback);
+                }, velocita);
+            } else {
+                if (callback) {
+                    callback();
+                }
+            }
+        }
+
+        function letteraPerLettera(elemento, testo, velocita, callback) {
+            effettoDigitazione(elemento, testo, 0, velocita, callback);
+        }
+
+        var dannoRatto = false;
+
+        function combattimentoRatti() {
+            var nuovoTesto = document.createElement("p");
+            nuovoTesto.textContent = "";
+            document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+            letteraPerLettera(nuovoTesto, "Avendoti preso alla sprovvista, i ratti scattano verso di te, provando a colpirti", 10, function () {
+                attaccoRatto = Math.floor(Math.random() * 20) + 1;
+                dannoRatto = Math.floor(Math.random() * 4) + 1;
+
+                var destrezza = parseInt(document.getElementById("destrezza").value);
+                var modificatore = Math.floor((destrezza - 10) / 2);
+                var personaggioCA = 10 + modificatore
+
+                if (attaccoRatto >= personaggioCA) {
+                    nuovoTesto2 = document.createElement("p");
+                    nuovoTesto2.textContent = "";
+                    document.getElementById("risultatoScelta").appendChild(nuovoTesto2);
+                    letteraPerLettera(nuovoTesto2, `I ratti ti colpiscono e ti fanno ${dannoRatto} danno/i`, 10, function () {
+                        var nuovoBottone = document.createElement("button");
+                        nuovoBottone.textContent = "E' il momento di attaccare!";
+                        nuovoBottone.className = "btnScelte";
+                        nuovoBottone.onclick = function () {
+                            attaccoVsRatti();
+                            this.style.display = "none";
+                        }
+                        document.getElementById("risultatoScelta").appendChild(nuovoBottone);
+                    });
+                    dannoRatto = true;
+                } else {
+                    nuovoTesto2 = document.createElement("p");
+                    nuovoTesto2.textContent = "";
+                    document.getElementById("risultatoScelta").appendChild(nuovoTesto2);
+                    letteraPerLettera(nuovoTesto2, "I ratti non riescono a colpirti", 10, function () {
+                        var nuovoBottone = document.createElement("button");
+                        nuovoBottone.textContent = "E' il momento di attaccare!";
+                        nuovoBottone.className = "btnScelte";
+                        nuovoBottone.onclick = function () {
+                            attaccoVsRatti();
+                            this.style.display = "none";
+                        }
+                        document.getElementById("risultatoScelta").appendChild(nuovoBottone);
+                    });
+                }
+            });
+            document.getElementById("combattimentoRatti").style.display = "none";
+        }
+
+        function attaccoVsRatti() {
+            var bonusAttaccoBase = parseInt(document.getElementById("bonusAttaccoBase").value);
+            var forza = parseInt(document.getElementById("forza").value);
+            var modificatore = Math.floor((forza - 10) / 2);
+
+            var dado = Math.floor(Math.random() * 20) + 1;
+            var valoreProva = dado + bonusAttaccoBase + modificatore;
+            var risultatoScelta = document.getElementById("risultatoScelta");
+
+            if (valoreProva >= 14) {
+                var dadoAttacco = Math.floor(Math.random() * 8) + 1;
+                var danno = dadoAttacco + modificatore;
+
+                if (danno >= 15) {
+                    var nuovoTesto = document.createElement("p");
+                    nuovoTesto.textContent = "";
+                    risultatoScelta.appendChild(nuovoTesto);
+                    letteraPerLettera(nuovoTesto, "Colpisci i ratti e con un unico colpo, uccidi i tre ratti feroci", 10, function () {
+                        var nuovoBottone = document.createElement("button");
+                        nuovoBottone.textContent = "Prosegui";
+                        nuovoBottone.className = "btnScelte";
+                        nuovoBottone.onclick = function () {
+                            esploraStanza();
+                            this.style.display = "none";
+                        }
+                        risultatoScelta.appendChild(nuovoBottone);
+                    });
+                } else {
+                    var nuovoTesto = document.createElement("p");
+                    nuovoTesto.textContent = "";
+                    risultatoScelta.appendChild(nuovoTesto);
+                    letteraPerLettera(nuovoTesto, "Colpisci i ratti, ferendoli e uccidendone uno. I ratti ti attaccano nuovamente", 10, function () {
+                        var nuovoBottone = document.createElement("button");
+                        nuovoBottone.textContent = "Continua";
+                        nuovoBottone.className = "btnScelte";
+                        nuovoBottone.onclick = function () {
+                            nuovoAttaccoRatti();
+                            this.style.display = "none";
+                        }
+                        risultatoScelta.appendChild(nuovoBottone);
+                    });
+                }
+            } else {
+                var nuovoTesto = document.createElement("p");
+                nuovoTesto.textContent = "";
+                risultatoScelta.appendChild(nuovoTesto);
+                letteraPerLettera(nuovoTesto, "Cerchi di colpire i ratti, senza successo. I ratti ti attaccano nuovamente", 10, function () {
+                    var nuovoBottone = document.createElement("button");
+                    nuovoBottone.textContent = "Continua";
+                    nuovoBottone.className = "btnScelte";
+                    nuovoBottone.onclick = function () {
+                        nuovoAttaccoRatti();
+                        this.style.display = "none";
+                    }
+                    risultatoScelta.appendChild(nuovoBottone);
+                });
+            }
+        }
+
+
+        function nuovoAttaccoRatti() {
+            var nuovoTesto = document.createElement("p");
+            nuovoTesto.textContent = "";
+            document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+            letteraPerLettera(nuovoTesto, "I ratti scattano nuovamente verso di te e provano a colpirti", 10, function () {
+                attaccoRatto = Math.floor(Math.random() * 20) + 1;
+                dannoRatto = Math.floor(Math.random() * 4) + 1;
+
+                var destrezza = parseInt(document.getElementById("destrezza").value);
+                var modificatore = Math.floor((destrezza - 10) / 2);
+                var personaggioCA = 10 + modificatore
+
+                if (attaccoRatto >= personaggioCA) {
+                    nuovoTesto2 = document.createElement("p");
+                    nuovoTesto2.textContent = "";
+                    document.getElementById("risultatoScelta").appendChild(nuovoTesto2);
+                    letteraPerLettera(nuovoTesto2, `I ratti ti colpiscono e ti fanno ${dannoRatto} danno/i`, 10, function () {
+                        var nuovoBottone = document.createElement("button");
+                        nuovoBottone.textContent = "E' il momento di contrattaccare!";
+                        nuovoBottone.className = "btnScelte";
+                        nuovoBottone.onclick = function () {
+                            nuovoAttaccoVsRatti();
+                            this.style.display = "none";
+                        }
+                        document.getElementById("risultatoScelta").appendChild(nuovoBottone);
+                    });
+                    dannoRatto = true;
+                } else {
+                    nuovoTesto2 = document.createElement("p");
+                    nuovoTesto2.textContent = "";
+                    document.getElementById("risultatoScelta").appendChild(nuovoTesto2);
+                    letteraPerLettera(nuovoTesto2, "I ratti ti mancano", 10, function () {
+                        var nuovoBottone = document.createElement("button");
+                        nuovoBottone.textContent = "E' il momento di contrattaccare!";
+                        nuovoBottone.className = "btnScelte";
+                        nuovoBottone.onclick = function () {
+                            nuovoAttaccoVsRatti();
+                            this.style.display = "none";
+                        }
+                        document.getElementById("risultatoScelta").appendChild(nuovoBottone);
+                    });
+                }
+            });
+        }
+
+        function nuovoAttaccoVsRatti() {
+            var bonusAttaccoBase = parseInt(document.getElementById("bonusAttaccoBase").value);
+            var forza = parseInt(document.getElementById("forza").value);
+            var modificatore = Math.floor((forza - 10) / 2);
+
+            var dado = Math.floor(Math.random() * 20) + 1;
+            var valoreProva = dado + bonusAttaccoBase + modificatore;
+            var risultatoScelta = document.getElementById("risultatoScelta");
+
+            if (valoreProva >= 14) {
+                var dadoAttacco = Math.floor(Math.random() * 8) + 1;
+                var danno = dadoAttacco + modificatore;
+
+                if (danno >= 15) {
+                    var nuovoTesto = document.createElement("p");
+                    nuovoTesto.textContent = "";
+                    risultatoScelta.appendChild(nuovoTesto);
+                    letteraPerLettera(nuovoTesto, "Colpisci i ratti e con un unico colpo, uccidi i ratti feroci rimanenti", 10, function () {
+                        var nuovoBottone = document.createElement("button");
+                        nuovoBottone.textContent = "Continua esplorazione";
+                        nuovoBottone.className = "btnScelte";
+                        nuovoBottone.onclick = function () {
+                            esploraStanza();
+                            this.style.display = "none";
+                        }
+                        risultatoScelta.appendChild(nuovoBottone);
+                    });
+                } else {
+                    var nuovoTesto = document.createElement("p");
+                    nuovoTesto.textContent = "";
+                    risultatoScelta.appendChild(nuovoTesto);
+                    letteraPerLettera(nuovoTesto, "Colpisci i ratti, ferendoli nuovamente e uccidendone un altro. Fortunatamente arriva Rexus giù dalle scale e prontamente, colpisce il ratto rimasto, uccidendolo", 10, function () {
+                        var nuovoBottone = document.createElement("button");
+                        nuovoBottone.textContent = "Continua esplorazione";
+                        nuovoBottone.className = "btnScelte";
+                        nuovoBottone.onclick = function () {
+                            esploraStanza();
+                            this.style.display = "none";
+                        }
+                        risultatoScelta.appendChild(nuovoBottone);
+                    });
+                }
+            } else {
+                var nuovoTesto = document.createElement("p");
+                nuovoTesto.textContent = "";
+                risultatoScelta.appendChild(nuovoTesto);
+                letteraPerLettera(nuovoTesto, "I ratti si muovono rapidamente intorno ai tuoi piedi, schivando i tuoi colpi. Fortunatamente arriva Rexus giù dalle scale e prontamente, colpisce i ratti, uccidendoli tutti", 10, function () {
+                    var nuovoBottone = document.createElement("button");
+                    nuovoBottone.textContent = "Continua esplorazione";
+                    nuovoBottone.className = "btnScelte";
+                    nuovoBottone.onclick = function () {
+                        esploraStanza();
+                        this.style.display = "none";
+                    }
+                    risultatoScelta.appendChild(nuovoBottone);
+                });
+            }
+        }
+
+        function esploraStanza() {
+            if (dannoRatto == true) {
+                var nuovoTesto = document.createElement("p");
+                nuovoTesto.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+                letteraPerLettera(nuovoTesto, "Rexus nota che hai subito qualche danno e ti lascia una pozione di cura ferite leggere. Dopo averla usata, ti senti completamente rinvigorito. Riprendete l'esplorazione e improvvisamente sentite una leggera e strana musica che proviene dalle viscere del complesso.", 10, function () {
+                    var nuovoBottone = document.createElement("button");
+                    nuovoBottone.textContent = "Segui il suono nella stanza adiacente";
+                    nuovoBottone.className = "btnScelte";
+                    nuovoBottone.onclick = function () {
+                        nido();
+                        this.style.display = "none";
+                    }
+                    document.getElementById("risultatoScelta").appendChild(nuovoBottone);
+                });
+            } else {
+                var nuovoTesto = document.createElement("p");
+                nuovoTesto.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+                letteraPerLettera(nuovoTesto, "Riprendete l'esplorazione e improvvisamente sentite una leggera e strana musica che proviene dalle viscere del complesso.", 10, function () {
+                    var nuovoBottone = document.createElement("button");
+                    nuovoBottone.textContent = "Segui il suono nella stanza adiacente";
+                    nuovoBottone.className = "btnScelte";
+                    nuovoBottone.onclick = function () {
+                        nido();
+                        this.style.display = "none";
+                    }
+                    document.getElementById("risultatoScelta").appendChild(nuovoBottone);
+                });
+            }
+        }
+
+        function nido() {
+            var nuovoTesto = document.createElement("p");
+            nuovoTesto.textContent = "";
+            document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+            letteraPerLettera(nuovoTesto, "Sale sporco e segatura ricoprono il pavimento di questo tetro corridoio. Alcuni pezzi di muratura sono stati staccati dalle pareti con denti o artigli, rivelando le strette e tortuose gallerie scavate da animali che si diramano oltre. Sul soffitto sono montate aste d'acciaio a cui è appeso qualche solitario gancio di ferro. Una pila di cuscini macchiati e delle coperte mangiate dalle tarme giacciono in un avvallamento di tre metri quadrati nel pavimento a nordovest. Una grata di ferro arrugginita e semidistrutta blocca l'accesso a una rampa di scale che scende verso il basso a nordest.", 10, function () {
+                var nuovoDiv = document.createElement("div");
+                nuovoDiv.className = "divBtnScelte";
+
+                var nuovoBottone = document.createElement("button");
+                nuovoBottone.textContent = "Esplora la stanza (PER)"
+                nuovoBottone.className = "btnScelte";
+                nuovoBottone.onclick = function () {
+                    percezioneNido();
+                    nuovoBottone.style.display = "none";
+                    nuovoBottone2.style.display = "none";
+                };
+                nuovoDiv.appendChild(nuovoBottone);
+
+                var nuovoBottone2 = document.createElement("button");
+                nuovoBottone2.textContent = "Ti avvicini alla grata di ferro";
+                nuovoBottone2.className = "btnScelte";
+                nuovoBottone2.onclick = function () {
+                    grataDaSfondare();
+                    nuovoBottone.style.display = "none";
+                    nuovoBottone2.style.display = "none";
+                };
+                nuovoDiv.appendChild(nuovoBottone2);
+
+                document.getElementById("risultatoScelta").appendChild(nuovoDiv);
+            });
+        }
+
+        function percezioneNido() {
+            var saggezza = parseInt(document.getElementById("saggezza").value);
+            var modificatore = Math.floor((saggezza - 10) / 2);
+
+            var dado = Math.floor(Math.random() * 20) + 1;
+            var valoreProva = dado + modificatore;
+            if (valoreProva >= 14) {
+                var nuovoTesto = document.createElement("p");
+                nuovoTesto.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+                letteraPerLettera(nuovoTesto, "Cercando tra i cuscini e le coperte rovinate, c'è un piccolo tesoro: 12 monete d'oro, 185 monete d'argento e un mantello magico", 10, function () {
+                    var nuovoBottone = document.createElement("button");
+                    nuovoBottone.textContent = "Analizza il mantello";
+                    nuovoBottone.className = "btnScelte";
+                    nuovoBottone.onclick = function () {
+                        sapienzaMagica();
+                        this.style.display = "none";
+                    }
+                    document.getElementById("risultatoScelta").appendChild(nuovoBottone);
+                });
+            } else {
+                var nuovoTesto = document.createElement("p");
+                nuovoTesto.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+                letteraPerLettera(nuovoTesto, "Non trovi nulla di particolare nella stanza", 10, function () {
+                    var nuovoBottone = document.createElement("button");
+                    nuovoBottone.textContent = "Ti avvicini alla grata";
+                    nuovoBottone.className = "btnScelte";
+                    nuovoBottone.onclick = function () {
+                        grataDaSfondare();
+                        this.style.display = "none";
+                    }
+                    document.getElementById("risultatoScelta").appendChild(nuovoBottone);
+                });
+            }
+        }
+
+        function sapienzaMagica() {
+            var intelligenza = parseInt(document.getElementById("intelligenza").value);
+            var modificatore = Math.floor((intelligenza - 10) / 2);
+
+            var dado = Math.floor(Math.random() * 20) + 1;
+            var valoreProva = dado + modificatore;
+            if (valoreProva >= 15) {
+                var nuovoTesto = document.createElement("p");
+                nuovoTesto.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+                letteraPerLettera(nuovoTesto, "Analizzando attentamente la natura magica del mantello, lo identifichi come un mantello della resistenza +1, indossandolo i nemici faranno più fatica a colpirti", 10, function () {
+                    var nuovoBottone = document.createElement("button");
+                    nuovoBottone.textContent = "Ti avvicini alla grata";
+                    nuovoBottone.className = "btnScelte";
+                    nuovoBottone.onclick = function () {
+                        grataDaSfondare();
+                        this.style.display = "none";
+                    }
+                    document.getElementById("risultatoScelta").appendChild(nuovoBottone);
+                });
+            } else {
+                var nuovoTesto = document.createElement("p");
+                nuovoTesto.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+                letteraPerLettera(nuovoTesto, "Non riesci ad identificare la natura magica del mantello, lo metti nell'inventario e prosegui", 10, function () {
+                    var nuovoBottone = document.createElement("button");
+                    nuovoBottone.textContent = "Ti avvicini alla grata";
+                    nuovoBottone.className = "btnScelte";
+                    nuovoBottone.onclick = function () {
+                        grataDaSfondare();
+                        this.style.display = "none";
+                    }
+                    document.getElementById("risultatoScelta").appendChild(nuovoBottone);
+                });
+            }
+        }
+
+        function grataDaSfondare() {
+            var forza = parseInt(document.getElementById("forza").value);
+            var modificatore = Math.floor((forza - 10) / 2);
+
+            var dado = Math.floor(Math.random() * 20) + 1;
+            var valoreProva = dado + modificatore;
+
+            if (valoreProva >= 12) {
+                var nuovoTesto = document.createElement("p");
+                nuovoTesto.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+                letteraPerLettera(nuovoTesto, "Visto lo stato della grata di ferro, tiri un calcio talmente forte da romperla del tutto", 10, function () {
+                    var nuovoBottone = document.createElement("button");
+                    nuovoBottone.textContent = "Prosegui";
+                    nuovoBottone.className = "btnScelte";
+                    nuovoBottone.onclick = function () {
+                        cisterna();
+                        this.style.display = "none";
+                    }
+                    document.getElementById("risultatoScelta").appendChild(nuovoBottone);
+                });
+            } else {
+                var nuovoTesto = document.createElement("p");
+                nuovoTesto.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+                letteraPerLettera(nuovoTesto, "Provi a dare un calcio alla grata, sperando si rompa, ma nulla. Rexus, ti fa notare che c'è un asse vicino alla grata, con cui poter fare leva. Provate entrambi a forzare la grata con l'asse e riuscite a sfondarla.", 10, function () {
+                    var nuovoBottone = document.createElement("button");
+                    nuovoBottone.textContent = "Prosegui";
+                    nuovoBottone.className = "btnScelte";
+                    nuovoBottone.onclick = function () {
+                        cisterna();
+                        this.style.display = "none";
+                    }
+                    document.getElementById("risultatoScelta").appendChild(nuovoBottone);
+                });
+            }
+        }
+
+        function cisterna() {
+            var nuovoTesto = document.createElement("p");
+            nuovoTesto.textContent = "";
+            document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+            letteraPerLettera(nuovoTesto, "Scendete le scale e trovate una vasca del diametro di 15 metri piena di una rancida fanghiglia marrone che occupa gran parte di questa stanza circolare. Pezzi d'intonaco sono venuti via, lasciando chiazze dai contorni frastagliati su pareti e soffitto e cumuli di detriti sul pavimento. Quanto rimane di spazio utile sul muro è decorato con rudimentali disegni e simboli dalle forme sinistre. Delle catene all'apparenza coperte da qualcosa di viscido si ancorano alla parete in vari punti, collegando quattro robusti pilastri che sorgono dalla melma.", 10, function () {
+                var nuovoBottone = document.createElement("button");
+                nuovoBottone.textContent = "Prosegui";
+                nuovoBottone.className = "btnScelte";
+                nuovoBottone.onclick = function () {
+                    proveCisterna();
+                    this.style.display = "none";
+                }
+                document.getElementById("risultatoScelta").appendChild(nuovoBottone);
+            })
+        }
+
+        function proveCisterna() {
+            var nuovoTesto = document.createElement("p");
+            nuovoTesto.textContent = "";
+            document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+            letteraPerLettera(nuovoTesto, "Senti ancora la strana musica provenire dal fondo della stanza. Oltre la cisterna noti che è presente un corridoio proprio sul fondo della stanza. Avvicinandoti, noti che ci sono inquietanti segni sulle pareti della cisterna.", 10, function () {
+                var nuovoDiv = document.createElement("div");
+                nuovoDiv.className = "divBtnScelte";
+
+                var nuovoBottone = document.createElement("button");
+                nuovoBottone.textContent = "Conoscenze Arcane/Piani (INT)";
+                nuovoBottone.className = "btnScelte";
+                nuovoBottone.onclick = function () {
+                    nuovoBottone.style.display = "none";
+                    nuovoBottone2.style.display = "none";
+                    provaConoscenze();
+                };
+                nuovoDiv.appendChild(nuovoBottone);
+
+                var nuovoBottone2 = document.createElement("button");
+                nuovoBottone2.textContent = "Ignori i segni e prosegui";
+                nuovoBottone2.className = "btnScelte";
+                nuovoBottone2.onclick = function () {
+                    provaTsCisterna();
+                    nuovoBottone.style.display = "none";
+                    nuovoBottone2.style.display = "none";
+                };
+                nuovoDiv.appendChild(nuovoBottone2);
+
+                document.getElementById("risultatoScelta").appendChild(nuovoDiv);
+            })
+        }
+
+        function provaConoscenze() {
+            var intelligenza = parseInt(document.getElementById("intelligenza").value);
+            var modificatore = Math.floor(intelligenza - 10) / 2;
+
+            var dado = Math.floor(Math.random() * 20) + 1;
+            var valoreProva = dado + modificatore;
+
+            if (valoreProva >= 15) {
+                var nuovoTesto = document.createElement("p");
+                nuovoTesto.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+                letteraPerLettera(nuovoTesto, "Analizzando le incisioni, capisci che sono delle rune per aprire un portale per l'Inferno, ma senza più alcuna magia infusa sopra. Rexus ti dice che queste cose non riguardano assolutamente i Corvi D'Argento, qualcun altro o qualcos'altro è stato qui.", 10, function () {
+                    var nuovoBottone = document.createElement("button");
+                    nuovoBottone.textContent = "Prosegui";
+                    nuovoBottone.className = "btnScelte";
+                    nuovoBottone.onclick = function () {
+                        provaTsCisterna();
+                        this.style.display = "none";
+                    };
+                    document.getElementById("risultatoScelta").appendChild(nuovoBottone);
+                });
+            } else {
+                var nuovoTesto = document.createElement("p");
+                nuovoTesto.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+                letteraPerLettera(nuovoTesto, "Provi ad analizzare le incisioni, ma ti sembrano dei semplici graffi. Rexus ha un'espressione un po' preoccupata, ma rimane in silenzio.", 10, function () {
+                    var nuovoBottone = document.createElement("button");
+                    nuovoBottone.textContent = "Prosegui";
+                    nuovoBottone.className = "btnScelte";
+                    nuovoBottone.onclick = function () {                        
+                        this.style.display = "none";
+                        provaTsCisterna();
+                    };
+                    document.getElementById("risultatoScelta").appendChild(nuovoBottone);
+                });
+                
+            }
+        }
+
+        function provaTsCisterna() {
+            var tsTempra = parseInt(document.getElementById("tsTempra").value);
+
+            var dado = Math.floor(Math.random() * 20) + 1;
+            var valoreProva = dado + tsTempra;
+            if (valoreProva >= 12) {
+                var nuovoTesto = document.createElement("p");
+                nuovoTesto.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+                letteraPerLettera(nuovoTesto, "Continui lungo la stanza per raggiungere il corridoio in fondo.", 10, function () {
+                    vecchioNascondiglio();
+                });
+            } else {
+                var nuovoTesto = document.createElement("p");
+                nuovoTesto.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+                letteraPerLettera(nuovoTesto, "Mentre vuoi avvicinarti al corridoio in fondo, inizi a sentire una forte nausea. L'odore del liquido nella cisterna inizia a farsi sentire. Sei nauseato per 1 round, ti conviene affrettare il passo.", 10, function () {
+                    vecchioNascondiglio();
+                });
+            }
+        }
+
+        function vecchioNascondiglio() {
+            var nuovoTesto = document.createElement("p");
+            nuovoTesto.textContent = "";
+            document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+            letteraPerLettera(nuovoTesto, "Giunti al corridoio, noti che ci sono delle stanze 'open space'. Queste stanze sono per lo più cadute in rovina. Pezzi d'intonaco penzolano dalle pareti, lasciando esposta la rozza muratura in pietra sottostante. I mobili sparsi che un tempo arredavano una camerata, una cucina e persino un'armeria ora sono sparpagliati in giro in stato di completo sfacelo, e le porte restano appese ai cardini degli archi decrepiti che separano le stanze. Il suono della musica proviene da questa stanza, ma ora è diventato appena udibile, quasi sussurrante.", 10, function () {
+                var nuovoDiv = document.createElement("div");
+                nuovoDiv.className = "divBtnScelte";
+
+                var nuovoBottone = document.createElement("button");
+                nuovoBottone.textContent = "Cerca di capire l'origine del suono (PER)";
+                nuovoBottone.className = "btnScelte";
+                nuovoBottone.onclick = function () {
+                    nuovoBottone.style.display = "none";
+                    nuovoBottone2.style.display = "none";
+                    seguiSuono();
+                };
+                nuovoDiv.appendChild(nuovoBottone);
+
+                var nuovoBottone2 = document.createElement("button");
+                nuovoBottone2.textContent = "Esplora stanze (PER)";
+                nuovoBottone2.className = "btnScelte";
+                nuovoBottone2.onclick = function () {                    
+                    nuovoBottone.style.display = "none";
+                    nuovoBottone2.style.display = "none";
+                    esploraNascondiglio();
+                };
+                nuovoDiv.appendChild(nuovoBottone2);
+
+                document.getElementById("risultatoScelta").appendChild(nuovoDiv);
+            });
+        }
+
+        function seguiSuono() {
+            var saggezza = parseInt(document.getElementById("saggezza").value);
+            var modificatore = Math.floor((saggezza - 10) / 2);
+
+            var dado = Math.floor(Math.random() * 20) + 1;
+            var valoreProva = dado + modificatore;
+            if (valoreProva >= 15) {
+                var nuovoTesto = document.createElement("p");
+                nuovoTesto.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+                letteraPerLettera(nuovoTesto, "Segui il suono e senti che proviene da un piccolo nido nell'angolo nordest che pare essere stato usato da una piccola creatura umanoide. All'improvviso, silenzio di tomba, la musica svanisce.", 10, function () {
+                    var nuovoBottone = document.createElement("button");
+                    nuovoBottone.textContent = "Continua ad esplorare";
+                    nuovoBottone.className = "btnScelte";
+                    nuovoBottone.onclick = function () {
+                        this.style.display = "none";
+                        esploraNascondiglio();
+                    };
+                    document.getElementById("risultatoScelta").appendChild(nuovoBottone);
+                });
+            } else {
+                var nuovoTesto = document.createElement("p");
+                nuovoTesto.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+                letteraPerLettera(nuovoTesto, "Cerchi di seguire il suono, ma non riesci a capire la fonte. E' come se arrivasse sempre dalle tue spalle, anche se ti giri e ti rigiri.", 10, function () {
+                    var nuovoBottone = document.createElement("button");
+                    nuovoBottone.textContent = "Continua ad esplorare";
+                    nuovoBottone.className = "btnScelte";
+                    nuovoBottone.onclick = function () {
+                        this.style.display = "none";
+                        esploraNascondiglio();
+                    };
+                    document.getElementById("risultatoScelta").appendChild(nuovoBottone);
+                });
+            }
+        }
+
+        provaRompereForziere = false;
+        provaScassinareForziere = false;
+
+        function esploraNascondiglio() {
+            var saggezza = parseInt(document.getElementById("saggezza").value);
+            var modificatore = Math.floor((saggezza - 10) / 2);
+
+            var dado = Math.floor(Math.random() * 20) + 1;
+            var valoreProva = dado + modificatore;
+            if (valoreProva > 10) {
+                var nuovoTesto = document.createElement("p");
+                nuovoTesto.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+                letteraPerLettera(nuovoTesto, "Esplorando le stanze, dietro alcune macerie noti due piccole casse. Ti avvicini alla prima e aprendola torvi un'armatura di cuoio +1, un arco corto composito, un mantello elfico e una borsa con una dozzina di perle del valore di circa 100 monete d'oro ciascuna. Ti avvicini all'altra cassa e aprendola trovi un forziere in ferro. Puoi provare a romperlo o scassinare la serratura ", 10, function () {
+                    var nuovoDiv = document.createElement("div");
+                    nuovoDiv.className = "divBtnScelte";
+
+                    var nuovoBottone = document.createElement("button");
+                    nuovoBottone.textContent = "Rompi il forziere (FOR)";
+                    nuovoBottone.className = "btnScelte";
+                    nuovoBottone.onclick = function () {
+                        nuovoBottone.style.display = "none";
+                        nuovoBottone2.style.display = "none";
+                        rompiForziere();
+                    };
+                    nuovoDiv.appendChild(nuovoBottone);
+
+                    var nuovoBottone2 = document.createElement("button");
+                    nuovoBottone2.textContent = "Scassina la serratura (DES)";
+                    nuovoBottone2.className = "btnScelte";
+                    nuovoBottone2.onclick = function () {
+                        nuovoBottone.style.display = "none";
+                        nuovoBottone2.style.display = "none";
+                        scassinaForziere();
+                    };
+                    nuovoDiv.appendChild(nuovoBottone2);
+
+                    document.getElementById("risultatoScelta").appendChild(nuovoDiv);
+                })
+            } else {
+                var nuovoTesto = document.createElement("p");
+                nuovoTesto.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto);
+                letteraPerLettera(nuovoTesto, "Esplorando le stanze, ma non sembra ci sia qualcosa d'interessante. Rexus insiste sulla ricerca, incredulo che non ci sia nulla di utile nella stanza. Perdete un po' di tempo ma alla fine, dietro alcune macerie notate due piccole casse. Ti avvicini alla prima e aprendola torvi un'armatura di cuoio +1, un arco corto composito, un mantello elfico e una borsa con una dozzina di perle del valore di circa 100 monete d'oro ciascuna. Ti avvicini all'altra cassa e aprendola trovi un forziere in ferro. Puoi provare a romperlo o scassinare la serratura ", 10, function () {
+                    var nuovoDiv = document.createElement("div");
+                    nuovoDiv.className = "divBtnScelte";
+
+                    var nuovoBottone = document.createElement("button");
+                    nuovoBottone.textContent = "Rompi il forziere (FOR)";
+                    nuovoBottone.className = "btnScelte";
+                    nuovoBottone.onclick = function () {
+                        nuovoBottone.style.display = "none";
+                        nuovoBottone2.style.display = "none";
+                        rompiForziere();
+                    };
+                    nuovoDiv.appendChild(nuovoBottone);
+
+                    var nuovoBottone2 = document.createElement("button");
+                    nuovoBottone2.textContent = "Scassina la serratura (DES)";
+                    nuovoBottone2.className = "btnScelte";
+                    nuovoBottone2.onclick = function () {
+                        nuovoBottone.style.display = "none";
+                        nuovoBottone2.style.display = "none";
+                        scassinaForziere();
+                    };
+                    nuovoDiv.appendChild(nuovoBottone2);
+
+                    document.getElementById("risultatoScelta").appendChild(nuovoDiv);
+                })
+            }
+        }
+        
+        function rompiForziere() {
+            var forza = parseInt(document.getElementById("forza").value);
+            var modificatoreFor = Math.floor((forza - 10) / 2);
+
+            var dado = Math.floor(Math.random() * 20) + 1;
+            var provaForza = dado + modificatoreFor;
+            if (provaForza >= 18) {
+                var nuovoTesto2 = document.createElement("p");
+                nuovoTesto2.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto2);
+                letteraPerLettera(nuovoTesto2, "Riesci a rompere il forziere e all'interno trovi una pila di documenti e pergamene. Queste carte sono marchiate con il sigillo dei Corvi D'Argento. Probabilemente in esse sono scritti tutte le informazioni e i segreti scoperti da loro. Però noti che le parole sono scritte in linguaggi diversi e incomprensibili. Bisogna trovare qualcuno che sappia decifrare le carte.", 10, function () {
+                    var nuovoBottone3 = document.createElement("button");
+                    nuovoBottone3.textContent = "Fine Avventura di prova!";
+                    nuovoBottone3.className = "btnScelte";
+                    nuovoBottone3.onclick = function () {
+                        window.location.href = "Personaggi/Index";
+                    };
+                    document.getElementById("risultatoScelta").appendChild(nuovoBottone3);
+                });
+            } else if (provaScassinareForziere == false && provaForza < 18) {
+                provaRompereForziere = true;
+
+                var nuovoTesto2 = document.createElement("p");
+                nuovoTesto2.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto2);
+                letteraPerLettera(nuovoTesto2, "Il forziere è troppo resistente per essere distrutto", 10, function () {
+                    var nuovoBottone3 = document.createElement("button");
+                    nuovoBottone3.textContent = "Prova a scassinarlo (DES)";
+                    nuovoBottone3.className = "btnScelte";
+                    nuovoBottone3.onclick = function () {
+                        this.style.display = "none";
+                        scassinaForziere();
+                    };
+                    document.getElementById("risultatoScelta").appendChild(nuovoBottone3);
+                })
+            } else {
+                var nuovoTesto2 = document.createElement("p");
+                nuovoTesto2.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto2);
+                letteraPerLettera(nuovoTesto2, "Non riesci in alcun modo ad aprire il forziere, forse ti conviene portarlo da qualcuno in grado di farlo", 10, function () {
+                    var nuovoBottone3 = document.createElement("button");
+                    nuovoBottone3.textContent = "Fine Avventura di prova!";
+                    nuovoBottone3.className = "btnScelte";
+                    nuovoBottone3.onclick = function () {
+                        window.location.href = "Personaggi/Index";
+                    };
+                    document.getElementById("risultatoScelta").appendChild(nuovoBottone3);
+                })
+            }
+        }
+       
+        function scassinaForziere() {
+            var destrezza = parseInt(document.getElementById("destrezza").value);
+            var modificatoreDes = Math.floor((destrezza - 10) / 2);
+
+            var dado = Math.floor(Math.random() * 20) + 1;
+            var provaDestrezza = dado + modificatoreDes;
+            if (provaDestrezza >= 18) {
+                var nuovoTesto2 = document.createElement("p");
+                nuovoTesto2.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto2);
+                letteraPerLettera(nuovoTesto2, "Riesci a scassinare il forziere e all'interno trovi una pila di documenti e pergamene. Queste carte sono marchiate con il sigillo dei Corvi D'Argento. Probabilemente in esse sono scritti tutte le informazioni e i segreti scoperti da loro. Però noti che le parole sono scritte in linguaggi diversi e incomprensibili. Bisogna trovare qualcuno che sappia decifrare le carte.", 10, function () {
+                    var nuovoBottone3 = document.createElement("button");
+                    nuovoBottone3.textContent = "Fine Avventura di prova!";
+                    nuovoBottone3.className = "btnScelte";
+                    nuovoBottone3.onclick = function () {
+                        window.location.href = "Personaggi/Index";
+                    };
+                    document.getElementById("risultatoScelta").appendChild(nuovoBottone3);
+                });
+            } else if (provaRompereForziere == false && provaDestrezza < 18) {
+                provaScassinareForziere = true;
+
+                var nuovoTesto2 = document.createElement("p");
+                nuovoTesto2.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto2);
+                letteraPerLettera(nuovoTesto2, "La serratura è troppo complicata per riuscire ad aprire il forziere", 10, function () {
+                    var nuovoBottone3 = document.createElement("button");
+                    nuovoBottone3.textContent = "Prova a romperlo (FOR)";
+                    nuovoBottone3.className = "btnScelte";
+                    nuovoBottone3.onclick = function () {
+                        this.style.display = "none";
+                        rompiForziere();
+                    };
+                    document.getElementById("risultatoScelta").appendChild(nuovoBottone3);
+                })
+            } else {
+                var nuovoTesto2 = document.createElement("p");
+                nuovoTesto2.textContent = "";
+                document.getElementById("risultatoScelta").appendChild(nuovoTesto2);
+                letteraPerLettera(nuovoTesto2, "Non riesci in alcun modo ad aprire il forziere, forse ti conviene portarlo da qualcuno in grado di farlo", 10, function () {
+                    var nuovoBottone3 = document.createElement("button");
+                    nuovoBottone3.textContent = "Fine Avventura di prova!";
+                    nuovoBottone3.className = "btnScelte";
+                    nuovoBottone3.onclick = function () {
+                        window.location.href = "/Personaggi/Index";
+                    };
+                    document.getElementById("risultatoScelta").appendChild(nuovoBottone3);
+                })
+            }
+        }
+
+    </script>
+}
+

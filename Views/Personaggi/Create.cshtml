@@ -1,0 +1,307 @@
+﻿@model Pathfinder.Models.PersonaggiViewModel
+@{
+    ViewBag.Title = "Creazione Personaggio";
+}
+<main id="mainCreate" class="mainColor">
+    <h1 class="fw-bold">Creazione Personaggio</h1> <button id="btnIndietro">@Html.ActionLink("Torna indietro", "Intro", "Personaggi", new { area = "" })</button>
+    @using (Html.BeginForm("Create", "Personaggi", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div id="topContainerCreate">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Nome, "Scegli un nome")
+                @Html.TextBoxFor(model => model.Nome, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <label>Livello</label>
+                <input type="text" class="form-control" value="@Model.Livello" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Punti Vita (calcolo automatico)</label>
+                <input id="PuntiVita" type="text" class="form-control" readonly />
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IdRazza, "Razza")
+                @Html.DropDownListFor(model => model.IdRazza, new SelectList(Model.RazzeList, "IdRazza", "Tipologia"), "Seleziona Razza", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IdRazza, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IdClasse, "Classe")
+                @Html.DropDownListFor(model => model.IdClasse, new SelectList(Model.ClassiList, "IdClasse", "Nome"), "Seleziona Classe", new { @class = "form-control", id = "ddlClassi" })
+                @Html.ValidationMessageFor(model => model.IdClasse, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div id="infoClasseInfo" style="display: none;">
+            <div class="form-group">
+                @Html.Label("Bonus Attacco Base", new { @class = "control-label" })
+                @Html.TextBox("bonusAttaccoBase", null, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+            <div class="form-group">
+                @Html.Label("TSTempra", new { @class = "control-label" })
+                @Html.TextBox("tsTempra", null, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+            <div class="form-group">
+                @Html.Label("TSRiflessi", new { @class = "control-label" })
+                @Html.TextBox("tsRiflessi", null, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+            <div class="form-group">
+                @Html.Label("TSVolonta", new { @class = "control-label" })
+                @Html.TextBox("tsVolonta", null, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+        </div>
+
+        <div id="infoClasseAbilita" style="display: none;">
+            <h4 class="fw-bold">Abilità della classe selezionata:</h4>
+            <div class="form-group">
+                <ul id="abilitaClasse"></ul>
+            </div>
+        </div>
+        <div class="sectionCaratteristiche">
+            <div class="form-group divCaratteristica">
+                @Html.LabelFor(model => model.Forza, "Forza")
+                <div class="divDice">
+                    @Html.TextBoxFor(model => model.Forza, new { @class = "customInput", type = "number", min = "3", max = "18"})
+                    <button class="button-82-pushable roll-dice" data-caratteristica="Forza" type="button">
+                        <span class="button-82-shadow"> </span>
+                        <span class="button-82-edge"> </span>
+                        <span class="button-82-front text">
+                            Lancia dadi
+                        </span>
+                    </button>
+                    @Html.ValidationMessageFor(model => model.Forza, "", new { @class = "text-danger" })
+                </div>
+                <p>Modificatore: <span class="modificatore" data-caratteristica="Forza"></span></p>
+            </div>
+
+            <div class="form-group divCaratteristica">
+                @Html.LabelFor(model => model.Destrezza, "Destrezza")
+                <div class="divDice">
+                    @Html.TextBoxFor(model => model.Destrezza, new { @class = "customInput", type = "number", min = "3", max = "18"})
+                    <button class="button-82-pushable roll-dice" data-caratteristica="Destrezza" type="button">
+                        <span class="button-82-shadow"> </span>
+                        <span class="button-82-edge"> </span>
+                        <span class="button-82-front text">
+                            Lancia dadi
+                        </span>
+                    </button>
+                    @Html.ValidationMessageFor(model => model.Destrezza, "", new { @class = "text-danger" })
+                </div>
+                <p>Modificatore: <span class="modificatore" data-caratteristica="Destrezza"></span></p>
+            </div>
+
+            <div class="form-group divCaratteristica">
+                @Html.LabelFor(model => model.Costituzione, "Costituzione")
+                <div class="divDice">
+                    @Html.TextBoxFor(model => model.Costituzione, new { @class = "customInput", type = "number", min = "3", max = "18"})
+                    <button class="button-82-pushable roll-dice" data-caratteristica="Costituzione" type="button">
+                        <span class="button-82-shadow"> </span>
+                        <span class="button-82-edge"> </span>
+                        <span class="button-82-front text">
+                            Lancia dadi
+                        </span>
+                    </button>
+                    @Html.ValidationMessageFor(model => model.Costituzione, "", new { @class = "text-danger" })
+                </div>
+                <p>Modificatore: <span class="modificatore" data-caratteristica="Costituzione"></span></p>
+            </div>
+
+            <div class="form-group divCaratteristica">
+                @Html.LabelFor(model => model.Intelligenza, "Intelligenza")
+                <div class="divDice">
+                    @Html.TextBoxFor(model => model.Intelligenza, new { @class = "customInput", type = "number", min = "3", max = "18"})
+                    <button class="button-82-pushable roll-dice" data-caratteristica="Intelligenza" type="button">
+                        <span class="button-82-shadow"> </span>
+                        <span class="button-82-edge"> </span>
+                        <span class="button-82-front text">
+                            Lancia dadi
+                        </span>
+                    </button>
+                    @Html.ValidationMessageFor(model => model.Intelligenza, "", new { @class = "text-danger" })
+                </div>
+                <p>Modificatore: <span class="modificatore" data-caratteristica="Intelligenza"></span></p>
+            </div>
+
+            <div class="form-group divCaratteristica">
+                @Html.LabelFor(model => model.Saggezza, "Saggezza")
+                <div class="divDice">
+                    @Html.TextBoxFor(model => model.Saggezza, new { @class = "customInput", type = "number", min = "3", max = "18"})
+
+                    <button class="button-82-pushable roll-dice" data-caratteristica="Saggezza" type="button">
+                        <span class="button-82-shadow"> </span>
+                        <span class="button-82-edge"> </span>
+                        <span class="button-82-front text">
+                            Lancia dadi
+                        </span>
+                    </button>
+                    @Html.ValidationMessageFor(model => model.Saggezza, "", new { @class = "text-danger" })
+                </div>
+                <p>Modificatore: <span class="modificatore" data-caratteristica="Saggezza"></span></p>
+            </div>
+
+            <div class="form-group divCaratteristica">
+                @Html.LabelFor(model => model.Carisma, "Carisma")
+                <div class="divDice">
+                    @Html.TextBoxFor(model => model.Carisma, new { @class = "customInput", type = "number", min = "3", max = "18"})
+                    <button class="button-82-pushable roll-dice" data-caratteristica="Carisma" type="button">
+                        <span class="button-82-shadow"> </span>
+                        <span class="button-82-edge"> </span>
+                        <span class="button-82-front text">
+                            Lancia dadi
+                        </span>
+                    </button>
+                    @Html.ValidationMessageFor(model => model.Carisma, "", new { @class = "text-danger" })
+                </div>
+                <p>Modificatore: <span class="modificatore" data-caratteristica="Carisma"></span></p>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end mt-5">
+        <button type="submit" id="btnSalvaCreate" class="btnSalvaCreate">Salva</button>
+        </div>
+        <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmModalLabel">Conferma</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnCancel">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Sei sicuro di voler creare il personaggio? Non sarai più in grado di modificarlo in seguito.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" id="btnCancel1">Annulla</button>
+                        <button type="button" class="btn btn-success" id="btnConfirmCreate">Conferma</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</main>
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('form').submit(function (event) {
+                event.preventDefault();
+                $('#confirmModal').modal('show');
+            });
+            $('#btnCancel').click(function () {
+                $('#confirmModal').modal('hide');
+            });
+            $('#btnCancel1').click(function () {
+                $('#confirmModal').modal('hide');
+            });
+            $('#btnConfirmCreate').click(function () {
+                $('form').off('submit').submit();
+            });
+        });
+
+       $(document).ready(function () {
+    $('#ddlClassi').change(function () {
+        var idClasse = $(this).val();
+        $.ajax({
+            url: '@Url.Action("GetClassInfo", "Personaggi")',
+            type: 'GET',
+            data: { idClasse: idClasse },
+            success: function (data) {
+                $('#bonusAttaccoBase').val(data.bonusAttaccoBase);
+                $('#tsTempra').val(data.tsTempra);
+                $('#tsRiflessi').val(data.tsRiflessi);
+                $('#tsVolonta').val(data.tsVolonta);
+                $('#infoClasseInfo').show();
+                $('#infoClasseAbilita').show();
+            }
+        });
+        $.ajax({
+            url: '@Url.Action("GetAbilitaClasse", "Personaggi")',
+            type: 'GET',
+            data: { idClasse: idClasse, forza: $('#Forza').val(), destrezza: $('#Destrezza').val(), costituzione: $('#Costituzione').val(), intelligenza: $('#Intelligenza').val(), saggezza: $('#Saggezza').val(), carisma: $('#Carisma').val() },
+            success: function (data) {
+                var abilitaList = $('#abilitaClasse');
+                abilitaList.empty();
+                $.each(data, function (index, abilita) {
+                    var valoreAbilita = abilita.Valore != null ? abilita.Valore : "";
+                    abilitaList.append('<li>' + abilita.Nome + ' - Valore: ' + valoreAbilita + '</li>');
+                });
+            }
+        });
+    });
+});
+
+        $(document).ready(function () {
+            $('.roll-dice').click(function () {
+                var caratteristica = $(this).data('caratteristica');
+                var valoreCaratteristica = rollDice();
+                $('#' + caratteristica).val(valoreCaratteristica);
+                $('#' + caratteristica).trigger('input');
+            });
+
+            function rollDice() {
+                var values = [];
+                for (var i = 0; i < 4; i++) {
+                    values.push(Math.floor(Math.random() * 6) + 1);
+                }
+                values.sort((a, b) => a - b);
+                values.shift();
+                return values.reduce((a, b) => a + b, 0);
+            }
+        });
+
+        $(document).ready(function () {
+            $('[type="number"]').on('input', function () {
+                var valoreCaratteristica = $(this).val();
+                var caratteristica = $(this).closest('.form-group').find('span.modificatore').data('caratteristica');
+                var modificatore = calcolaModificatore(valoreCaratteristica);
+                $(this).closest('.form-group').find('span.modificatore').text(modificatore);
+
+                if (caratteristica === "Costituzione") {
+                    var puntiVita = calcolaPuntiVita(valoreCaratteristica);
+                    $('#PuntiVita').val(puntiVita);
+                }
+                updateAbilita();
+            });
+
+            function calcolaModificatore(valore) {
+                if (valore >= 10) {
+                    return '+' + Math.floor((valore - 10) / 2);
+                } else {
+                    return Math.floor((valore - 10) / 2);
+                }
+            }
+            function calcolaPuntiVita(costituzione) {
+                var modificatore = calcolaModificatore(costituzione);
+                return 10 + parseInt(modificatore);
+            }
+            function updateAbilita() {
+        var idClasse = $('#ddlClassi').val();
+        $.ajax({
+            url: '@Url.Action("GetAbilitaClasse", "Personaggi")',
+            type: 'GET',
+            data: {
+                idClasse: idClasse,
+                forza: $('#Forza').val(),
+                destrezza: $('#Destrezza').val(),
+                costituzione: $('#Costituzione').val(),
+                intelligenza: $('#Intelligenza').val(),
+                saggezza: $('#Saggezza').val(),
+                carisma: $('#Carisma').val()
+            },
+            success: function (data) {
+                var abilitaList = $('#abilitaClasse');
+                abilitaList.empty();
+                $.each(data, function (index, abilita) {
+                    var valoreAbilita = abilita.Valore != null ? abilita.Valore : "";
+                    abilitaList.append('<li>' + abilita.Nome + ' - Valore: ' + valoreAbilita + '</li>');
+                });
+            }
+        });
+    }
+        });
+    </script>
+}

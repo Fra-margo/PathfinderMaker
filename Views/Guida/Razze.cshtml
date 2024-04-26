@@ -1,0 +1,306 @@
+﻿
+@{
+    ViewBag.Title = "Razze";
+}
+
+<section class="sectionPage">
+    <div class="sidebar">
+        <div class="nav" >
+            <ul id="imgMago">
+                <li>@Html.ActionLink("Punteggi di Caratteristica", "Caratteristiche", "Guida", new { area = "" })</li>
+                <li  class="active">@Html.ActionLink("Razze", "Razze", "Guida", new { area = "" })</li>
+                <li>@Html.ActionLink("Classi", "Classi", "Guida", new { area = "" })</li>
+                <li>@Html.ActionLink("Abilità", "Abilita", "Guida", new { area = "" })</li>
+                <li>@Html.ActionLink("Talenti", "Talenti", "Guida", new { area = "" })</li>
+            </ul>
+        </div>
+    </div>
+    <div class="rightContainer">
+        <h1 id="razza">Razze</h1>
+        <div>
+            <h2 id="elfi">Elfi</h2>
+            <p>
+                I longevi elfi sono i figli del mondo naturale, simili per alcuni versi alle creature fatate, e tuttavia differenti.
+                Gli elfi danno valore alla riservatezza ed alle tradizioni e sebbene sia per loro piuttosto difficile instaurare nuove amicizie, a qualsiasi livello, una volta che uno straniero è accettato come compagno,
+                tale alleanza può durare per intere generazioni.
+                Gli elfi hanno un curioso legame con ciò che li circonda, forse conseguenza della loro longevità o per altri motivi più profondi e mistici,
+                e se abitano nello stesso luogo per molto tempo scoprono che il loro fisico si è adattato al luogo. Il segno più evidente è il colore della pelle che riflette quello dell’ambiente.
+                Quegli elfi che passano le loro vite fra le razze meno longeve, d’altra parte, spesso sviluppano una percezione distorta della mortalità e diventano più cupi,
+                per aver visto invecchiare e morire davanti ai loro occhi i propri compagni numerose volte.
+            </p>
+                <button class="learn-more toggle">
+                    <span class="circle" aria-hidden="true">
+                        <span class="icon arrow"></span>
+                    </span>
+                    <span class="button-text">Mostra di più</span>
+                </button>
+            <div class="hidden" id="imgElfi">
+                <ul>
+                    <li><span class="parolaChiave">Descrizione fisica</span>: Gli elfi sono in genere più alti degli umani, ma sono più aggraziati ed esili. Hanno lunghe orecchie a punta e ampi occhi a mandorla con pupille grandi dai colori vivaci. Mentre i vestiti elfici spesso tendono ad adattarsi alla bellezza dell’ambiente naturale, quegli elfi che vivono in città tendono ad abbigliarsi all’ultima moda.</li>
+                    <li><span class="parolaChiave">Società</span>: Gli elfi percepiscono un forte Legame con la natura e si sforzano di vivere in armonia con essa. La maggior parte, tuttavia, trova la manipolazione della terra e della pietra spiacevole e preferisce dedicarsi ad arti più raffinate, e l’innata pazienza rende gli elfi molto portati alla magia.</li>
+                    <li><span class="parolaChiave">Rapporti</span>: Gli elfi spesso tengono lontane le altre razze, considerandole impetuose ed impulsive, ma sanno giudicare le persone in modo eccellente. Un elfo potrebbe non volere mai un nano come vicino, ma sarebbe il primo a riconoscerne le Abilità come fabbro. Considerano gli gnomi come bizzarre curiosità (ed a volte pericolosi) e gli halfling con un po’ di pietà, dato che questi popoli appaiono agli elfi essere sempre alla deriva, senza una vera e propria patria. Gli elfi sono affascinati dagli umani, come provato dal grande numero di mezzelfi nel mondo, sebbene solitamente rinneghino tale prole. Considerano i mezzorchi con diffidenza e sospetto.</li>
+                    <li><span class="parolaChiave">Allineamento e religione</span>: Gli elfi sono impressionabili e capricciosi, tuttavia danno valore a bontà e bellezza. Gli elfi sono per lo più di allineamento caotico buono.</li>
+                    <li><span class="parolaChiave">Avventurieri</span>: Molti elfi vanno in avventura spinti dal desiderio di esplorare il mondo, abbandonando i loro appartati regni nelle foreste per recuperare la dimenticata magia elfica o cercare regni perduti fondati millenni fa dai loro antenati. Per quelli cresciuti fra gli umani, la vita effimera e libera di un avventuriero conserva un richiamo naturale. Gli elfi evitano in genere la mischia a causa della loro debolezza, preferendo le classi del Mago e del Ranger.</li>
+                </ul>
+                <h4>Tratti Razziali</h4>
+                <ul>
+                    <li><span class="parolaChiave" onclick="redirectToDes()">Destrezza +2</span>, <span class="parolaChiave" onclick="redirectToInt()">Intelligenza +2</span>, <span class="parolaChiave" onclick="redirectToCos()">Costituzione –2</span>: Gli elfi sono lesti e svegli, ma piuttosto deboli.</li>
+                    <li><span class="parolaChiave">Taglia Media</span>: Come creature Medie, gli elfi non hanno bonus o penalità derivanti dalla loro taglia.</li>
+                    <li><span class="parolaChiave">Velocità normale</span>: La velocità base sul terreno degli elfi è 9 metri.</li>
+                    <li><span class="parolaChiave">Visione crepuscolare</span>: Gli elfi vedono due volte più lontano di un umano in condizioni di luce scarsa. Vedi Regole Addizionali.</li>
+                    <li><span class="parolaChiave">Familiarità nelle armi</span>: Gli elfi sono competenti nell’arco corto (compreso arco corto composito), nell’arco lungo (compreso arco lungo composito), spada lunga e stocco, e considerano qualsiasi arma con la parola “elfico” nel nome come arma da guerra.</li>
+                    <li><span class="parolaChiave">Immunità degli elfi</span>: Gli elfi sono immuni agli effetti di sonno magico e ottengono bonus razziale +2 ai <span>Tiri Salvezza</span> contro incantesimi ed effetti di ammaliamento.</li>
+                    <li><span class="parolaChiave">Magia degli elfi</span>: Gli elfi ottengono bonus razziale +2 alle prove di livello dell’incantatore effettuate per superare la Resistenza agli Incantesimi; ottengono bonus razziale +2 alle prove di <span>Sapienza Magica</span> effettuate per identificare le proprietà degli oggetti magici.</li>
+                    <li><span class="parolaChiave">Sensi acuti</span>: Gli elfi ottengono bonus razziale +2 alle prove di <span>Percezione</span>.</li>
+                    <li><span class="parolaChiave">Linguaggi</span>: Gli elfi iniziano il gioco parlando Comune ed Elfico. Gli elfi con alto punteggio di Intelligenza possono scegliere fra i seguenti linguaggi: Celestiale, Draconico, Gnoll, Gnomesco, Goblin, Orchesco e Silvano.</li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <h2 id="gnomi">Gnomi</h2>
+            <p>
+                Gli gnomi tracciano la loro discendenza nel misterioso regno fatato, un luogo in cui i colori sono più luminosi, le terre incolte più selvagge e le emozioni più primeve.
+                Forze sconosciute molto tempo fa hanno portato via gli gnomi antichi da quel regno, costringendoli a cercare rifugio in questo mondo;
+                malgrado ciò, gli gnomi non hanno mai completamente abbandonato le loro radici fatate né si sono adattati alla cultura mortale.
+                Di conseguenza, gli gnomi sono considerati dalle altre razze per lo più come misteriosi e bizzarri.
+            </p>
+            <button class="learn-more toggle">
+                <span class="circle" aria-hidden="true">
+                    <span class="icon arrow"></span>
+                </span>
+                <span class="button-text">Mostra di più</span>
+            </button>
+            <div class="hidden" id="imgGnomi">
+                <ul>
+                    <li><span class="parolaChiave">Descrizione fisica</span>: Gli gnomi sono una delle razze comuni più piccole, in genere non più alti di 90 cm. I loro capelli tendono verso i colori accesi come l’arancione vivace delle foglie in autunno, il verde brillante delle foreste in primavera, o il rosso o il viola profondo dei fiori di campo in piena fioritura. Allo stesso modo, la loro carnagione varia dal marrone al rosa, solitamente con poco riguardo per l’ereditarietà. Gli gnomi possiedono lineamenti molto diversi e molti hanno bocche ed occhi molto grandi, peculiarità che può essere inquietante o affascinante, a seconda dell’individuo.</li>
+                    <li><span class="parolaChiave">Società</span>: A differenza delle altre razze, gli gnomi non si organizzano generalmente nelle classiche strutture sociali. Creature capricciose per natura, gli gnomi viaggiano spesso da soli o con compagni provvisori, sempre alla ricerca di esperienze nuove e più emozionanti. Formano raramente relazioni durature fra loro o con le altre razze, perseguendo invece i mestieri, le professioni o l’arte con una passione che a volte sfocia nel fanatismo. Gli gnomi maschi hanno una bizzarra ammirazione per cappelli e copricapo insoliti, mentre le femmine amano le acconciature elaborate ed eccentriche.</li>
+                    <li><span class="parolaChiave">Rapporti</span>: Gli gnomi hanno difficoltà ad interagire con le altre razze, sia a livello fisico che emozionale. Il loro umore è difficile da capire e spesso viene travisato dalle altre razze come malizioso o senza senso, mentre gli gnomi a loro volta ritengono le razze più alte come giganti noiosi e pesanti. Vanno d’accordo con halfling e umani, ma sono eccessivamente affettuosi nello scherzare con nani e mezzorchi, che gli gnomi vogliono far rilassare. Rispettano gli elfi, ma spesso sono frustrati dalla lentezza con cui essi prendono le decisioni: per gli gnomi l’azione è sempre meglio dell’inerzia, e per questo molti portano sempre con sé molti progetti complicati per mantenersi attivi durante i periodi di riposo.</li>
+                    <li><span class="parolaChiave">Allineamento e religione</span>: Sebbene siano impulsivi e giocherelloni, con motivi a volte imperscrutabili e metodi ugualmente confusi, gli gnomi sono in genere buoni. Sono inclini alle emozioni e amano la natura.</li>
+                    <li><span class="parolaChiave">Avventurieri</span>: L’amore degli gnomi per i viaggi li rende degli avventurieri naturali. Diventano spesso vagabondi per sperimentare nuovi aspetti della vita, dato che niente è più originale degli innumerevoli pericoli che un avventuriero deve affrontare. Gli gnomi compensano la loro debolezza con una propensione per la Stregoneria e l’arte dei bardi.</li>
+                </ul>
+                <h4>Tratti Razziali</h4>
+                <ul>
+                    <li><span class="parolaChiave" onclick="redirectToCos()">Costituzione +2</span>, <span class="parolaChiave" onclick="redirectToCar()"> Carisma +2</span>, <span class="parolaChiave" onclick="redirectToFor()"> Forza –2</span>: Gli gnomi sono fisicamente deboli ma sorprendentemente resistenti, ed il loro atteggiamento li rende per natura simpatici.</li>
+                    <li><span class="parolaChiave">Taglia Piccola</span>: Come creature Piccole gli gnomi hanno bonus di taglia +1 alla <span>CA</span>, bonus di taglia +1 ai tiri per colpire, penalità –1 a <span>BMC</span> e <span>DMC</span>, e infine bonus di taglia +4 alle prove di <span>Furtività</span>.</li>
+                    <li><span class="parolaChiave">Velocità lenta</span>: La velocità base sul terreno degli gnomi è 6 metri.</li>
+                    <li><span class="parolaChiave">Visione crepuscolare</span>: Gli gnomi vedono due volte più lontano di un umano in condizioni di luce scarsa. Vedi Regole Addizionali.</li>
+                    <li><span class="parolaChiave">Addestramento difensivo</span>: Gli gnomi ottengono bonus di schivare +4 alla <span>CA</span> contro mostri del sottotipo gigante.</li>
+                    <li><span class="parolaChiave">Familiarità nelle armi</span>: Gli gnomi considerano qualsiasi arma con la parola “gnomesca” nel nome come arma da guerra.</li>
+                    <li><span class="parolaChiave">Magia gnomesca</span>: Gli gnomi aggiungono +1 alla CD di ogni <span>Tiro Salvezza</span> contro gli incantesimi di illusione che lanciano. Gli gnomi con Carisma 11 o superiore guadagnano inoltre le seguenti Capacità Magiche: 1/giorno—luci danzanti, parlare con gli animali, prestidigitazione e suono fantasma. Il livello dell’incantatore per questi effetti è uguale al livello dello gnomo. La <span>CD</span> per questi incantesimi è pari a 10 + livello dell’incantesimo + modificatore di Carisma dello gnomo.</li>
+                    <li><span class="parolaChiave">Odio</span>: Gli gnomi ottengono bonus +1 ai tiri per colpire contro creature umanoidi del sottotipo rettile e goblinoide grazie allo speciale addestramento contro questi odiati nemici.</li>
+                    <li><span class="parolaChiave">Ossessione</span>: Gli gnomi ottengono bonus razziale +2 ad un'abilità di <span>Artigianato</span> o <span>Professione</span> di loro scelta.</li>
+                    <li><span class="parolaChiave">Resistenza alle illusioni</span>: Gli gnomi ottengono bonus razziale +2 ai <span>Tiri Salvezza</span> contro incantesimi ed effetti di illusione.</li>
+                    <li><span class="parolaChiave">Sensi acuti</span>: Gli gnomi ottengono bonus razziale +2 alle prove di <span>Percezione</span>.</li>
+                    <li><span class="parolaChiave">Linguaggi</span>: Gli gnomi iniziano il gioco parlando Comune, Gnomesco e Silvano. Gli gnomi con alto punteggio di Intelligenza possono scegliere tra i seguenti linguaggi: Draconico, Elfico, Gigante, Goblin, Nanico, e Orchesco.</li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <h2 id="halfling">Halfling</h2>
+            <p>
+                Ottimisti e allegri per natura, benedetti da una fortuna misteriosa e determinati da uno spirito formidabile, gli halfling compensano la loro bassa statura con un’abbondanza di spavalderia e curiosità.
+                Emozionabili e accomodanti allo stesso tempo, gli halfling prediligono mantenere un temperamento costante e controllato in ogni occasione, evitando quegli scoppi troppo violenti o emotivi delle altre razze più volubili.
+                Anche nei momenti più catastrofici, un halfling non perde quasi mai il suo senso dell’umorismo.
+                Gli halfling sono opportunisti inveterati. Incapaci di difendersi fisicamente dai rigori del mondo, sanno quando piegarsi al vento e quando nascondersi.
+                Tuttavia la curiosità degli halfling spesso sovrasta il buon senso, portandoli a decisioni poco adeguate per evitare i pericoli.
+                Benché la loro curiosità li guidi per viaggiare e cercare nuovi posti ed esperienze, gli halfling possiedono un forte senso della propria casa, spendendo spesso oltre i loro mezzi per aumentare le comodità della vita domestica.
+            </p>
+            <button class="learn-more toggle">
+                <span class="circle" aria-hidden="true">
+                    <span class="icon arrow"></span>
+                </span>
+                <span class="button-text">Mostra di più</span>
+            </button>
+            <div class="hidden" id="imgHalfling">
+                <ul>
+                    <li><span class="parolaChiave">Descrizione fisica</span>: Gli halfling hanno l’umile altezza di 90 cm. Preferiscono camminare a piedi nudi, e ciò fa sì che la pianta dei loro piedi sia piuttosto callosa. Ciuffi di peli ricci e fitti scaldano la parte superiore dei loro piedi abbronzati e larghi. La loro carnagione tende verso il color mandorla ed i loro capelli verso le tonalità chiare del marrone. Hanno orecchie a punta, ma proporzionalmente non molto più grandi di quelle di un umano.</li>
+                    <li><span class="parolaChiave">Società</span>: Gli halfling non reclamano una patria e non controllano insediamenti più grandi di assemblee rurali di città libere. Molto più spesso, abitano vicino agli umani in città umane, sbarcando il lunario come possono dagli scarti di società più grandi. Molti halfling conducono vite assai ricche all’ombra dei loro vicini più alti, mentre alcuni preferiscono una vita nomade, viaggiando per il mondo e sperimentando tutto quello che esso può offrire.</li>
+                    <li><span class="parolaChiave">Rapporti</span>: Gli halfling si vantano spesso con le altre razze della loro capacità di passare inosservati, caratteristica che permette a molti di eccellere nell’arte del furto e del sotterfugio. Tuttavia, molti halfling, sapendo bene i pregiudizi a riguardo, cercano di essere disponibili ed amichevoli verso le razze più grandi quando non stanno provando a passare inosservati. Vanno d’accordo con gli eccentrici gnomi, anche se li trattano sempre con estrema cautela. Gli halfling in genere convivono bene con gli umani, ma dato che alcune società umane più aggressive li considerano poco meno di schiavi, cercano di controllarsi quando hanno a che fare con loro. Rispettano gli elfi ed i nani, ma essi vivono spesso in luoghi remoti lontani dalle comodità della civiltà che gli halfling amano, così le occasioni di interazione sono limitate. Soltanto i mezzorchi sono proprio del tutto evitati dagli halfling, dato che le loro dimensioni e la natura violenta intimoriscono non poco la maggior parte degli halfling.</li>
+                    <li><span class="parolaChiave">Allineamento e religione</span>: Gli halfling sono leali ai loro amici e famiglie, ma poiché abitano in un mondo dominato da razze due volte più grandi di loro, sanno che a volte dovranno litigare e elemosinare per sopravvivere. Gli halfling sono per lo più di allineamento neutrale.</li>
+                    <li><span class="parolaChiave">Avventurieri</span>: La loro fortuna intrinseca unita al loro insaziabile desiderio di viaggiare rendono gli halfling ideali per l’avventura. Altri vagabondi tendono a tollerare questa razza curiosa nella speranza che una parte della sua fortuna mistica possa riflettersi anche su di loro.</li>
+                </ul>
+                <h4>Tratti Razziali</h4>
+                <ul>
+                    <li><span class="parolaChiave">Destrezza +2</span>,<span class="parolaChiave" onclick="redirectToCar()"> Carisma +2</span>, <span class="parolaChiave" onclick="redirectToFor()"> Forza –2</span>: Gli halfling sono agili e caparbi, ma la loro bassa statura li rende più deboli degli altri.</li>
+                    <li><span class="parolaChiave">Taglia Piccola</span>: Come creature Piccole, gli halfling hanno bonus di taglia +1 alla <span>CA</span>, bonus di taglia +1 ai tiri per colpire, penalità –1 a <span>BMC</span> e <span>DMC</span>, ed infine bonus di taglia +4 alle prove di <span>Furtività</span>.</li>
+                    <li><span class="parolaChiave">Velocità lenta</span>: La velocità base sul terreno degli halfling è 6 metri.</li>
+                    <li><span class="parolaChiave">Familiarità nelle armi</span>: Gli halfling sono competenti con la fionda e considerano qualsiasi arma con la parola “halfling” nel nome come arma da guerra.</li>
+                    <li><span class="parolaChiave">Fortuna halfling</span>: Gli halfling ottengono bonus razziale +1 a tutti i <span>Tiri Salvezza</span>.</li>
+                    <li><span class="parolaChiave">Piede saldo</span>: Gli halfling ottengono bonus razziale +2 alle prove di <span>Acrobazia</span> e <span>Scalare</span>.</li>
+                    <li><span class="parolaChiave">Sensi acuti</span>: Gli halfling ottengono bonus razziale +2 alle prove di <span>Percezione</span>.</li>
+                    <li><span class="parolaChiave">Temerarietà</span>: Gli halfling ottengono bonus razziale +2 a tutti i <span>Tiri Salvezza</span> contro paura. Questo bonus si cumula con quello conferito da fortuna halfling.</li>
+                    <li><span class="parolaChiave">Linguaggi</span>: Gli halfling iniziano il gioco parlando Comune e Halfling. Gli halfling con alto punteggio di Intelligenza possono scegliere tra i seguenti linguaggi: Elfico, Gnomesco, Goblin e Nanico.</li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <h2 id="mezzelfi">Mezzelfi</h2>
+            <p>
+                Gli elfi hanno per lungo tempo attratto gli sguardi bramosi delle altre razza. La loro longevità, affinità magica e innata grazia contribuiscono tutte all’ammirazione o talvolta all’amara invidia di chi sta loro vicino.
+                Di tutte le loro caratteristiche, tuttavia, nessuna è più attraente per gli umani della loro bellezza.
+                Da quando le due razze sono entrate in contatto tra loro, gli umani hanno sostenuto gli elfi come modelli di perfezione fisica, vedendoli come versioni idealizzate di se stessi.
+                Da parte loro, molti elfi trovano gli umani attraenti malgrado i loro modi alquanto barbari, spinti dalla passione e dall’impeto con cui i membri di questa razza più giovane vivono la propria breve esistenza.
+                A volte questa infatuazione reciproca porta a rapporti romantici.
+                Benché solitamente di breve durata, anche per gli standard umani, questi incontri segreti portano di solito alla nascita dei mezzelfi, una razza che discende da due culture, ma non è erede di nessuna.
+                I mezzelfi possono riprodursi tra loro, ma persino questi mezzelfi “di sangue puro” tendono ad essere visti egualmente come bastardi dagli umani e dagli elfi.
+            </p>
+            <button class="learn-more toggle">
+                <span class="circle" aria-hidden="true">
+                    <span class="icon arrow"></span>
+                </span>
+                <span class="button-text">Mostra di più</span>
+            </button>
+            <div class="hidden" id="imgMezzelfi">
+                <ul>
+                    <li><span class="parolaChiave">Descrizione fisica</span>: I mezzelfi sono più alti degli umani ma più bassi degli elfi. Sono esili e avvenenti come gli elfi, ma la loro carnagione è data dal loro sangue umano. Hanno le orecchie a punta come gli elfi, ma sono più arrotondate e meno evidenti. Gli occhi sono simili a quelli umani e dai colori esotici, dall’ambrato o viola al verde smeraldo e al blu scuro.</li>
+                    <li><span class="parolaChiave">Società</span>: La mancanza di una patria e di una cultura unificate costringe i mezzelfi a rimanere versatili, in grado di conformarsi con ogni ambiente. Mentre sono spesso attraenti per entrambe le razze per gli stessi motivi dei loro genitori, i mezzelfi di rado si trovano a loro agio con umani o elfi, dato che entrambe le razze vedono troppa prova dell’altra in essi. Questa mancanza di accettazione pesa molto su alcuni mezzelfi, mentre altri sono più motivati dal loro status unico, vedendo questa mancanza di cultura formalizzata come l’ultimo baluardo di libertà. Per questo, i mezzelfi si adattano facilmente e sono capaci di cambiare la propria mentalità e le proprie capacità in quello che le società si aspettano da loro.</li>
+                    <li><span class="parolaChiave">Rapporti</span>: Un mezzelfo comprende la solitudine e sa che il carattere è spesso un prodotto dell’esperienza di vita piuttosto che della razza. Pertanto, i mezzelfi sono spesso aperti alle amicizie ed alle alleanze con le altre razze e non si basano quasi mai solo sulla prima impressione quando devono farsi un’opinione su nuove Conoscenze.</li>
+                    <li><span class="parolaChiave">Allineamento e religione</span>: L’isolamento dei mezzelfi influisce fortemente sul loro carattere e sulle loro idee. Non sono portati per natura alla crudeltà, né a mescolarsi e piegarsi alle convenzioni sociali, e perciò la maggior parte dei mezzelfi ha allineamento caotico buono. La mancanza di una cultura unitaria non spinge quasi mai i mezzelfi verso la religione, ma quelli che lo fanno, in genere, seguono la fede comune della loro patria.</li>
+                    <li><span class="parolaChiave">Avventurieri</span>: I mezzelfi tendono a viaggiare spesso alla ricerca di un posto che potrebbero finalmente chiamare casa. Il desiderio di dimostrarsi degni di una comunità e di stabilire un’identità personale, o persino una discendenza, guida molti avventurieri mezzelfi a vite spinte dal valore e dal coraggio.</li>
+                </ul>
+                <h4>Tratti Razziali</h4>
+                <ul>
+                    <li><span class="parolaChiave">+2 ad un punteggio di caratteristica</span>: I personaggi mezzelfi ricevono bonus +2 ad un punteggio di caratteristica di loro scelta al momento della creazione come prova della loro natura diversa.</li>
+                    <li><span class="parolaChiave">Taglia Media</span>: Come creature Medie, i mezzelfi non hanno bonus o penalità derivanti dalla loro taglia.</li>
+                    <li><span class="parolaChiave">Velocità normale</span>: La velocità base sul terreno dei mezzelfi è 9 metri.</li>
+                    <li><span class="parolaChiave">Visione crepuscolare</span>: I mezzelfi vedono due volte più lontano di un umano in condizioni di luce scarsa. Vedi Regole Addizionali.</li>
+                    <li><span class="parolaChiave">Adattabilità</span>: I mezzelfi ricevono Abilità Focalizzata come talento bonus al 1° livello.</li>
+                    <li><span class="parolaChiave">Doti innate</span>: I mezzelfi scelgono due classi preferite al 1° livello ed ottengono +1 punto ferita o +1 grado d’<span>abilità</span> ogni volta che avanzano di livello in una delle due classi. Vedi <span>Classi</span> per maggiori informazioni sulle classi preferite.</li>
+                    <li><span class="parolaChiave">Immunità degli elfi</span>: I mezzelfi sono immuni agli effetti di sonno magico e hanno bonus razziale +2 ai <span>Tiri Salvezza</span> contro incantesimi ed effetti di ammaliamento.</li>
+                    <li><span class="parolaChiave">Sangue elfico</span>: I mezzelfi contano sia come elfi che come umani per qualsiasi effetto relativo alla razza.</li>
+                    <li><span class="parolaChiave">Sensi acuti</span>: I mezzelfi ottengono bonus razziale +2 alle prove di <span>Percezione</span>.</li>
+                    <li><span class="parolaChiave">Linguaggi</span>: I mezzelfi iniziano il gioco parlando Comune ed Elfico. I mezzelfi con alto punteggio di Intelligenza possono scegliere tutti i linguaggi che vogliono (tranne i linguaggi segreti, come il Druidico).</li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <h2 id="mezzorchi">Mezzorchi</h2>
+            <p>
+                I mezzorchi sono delle mostruosità, le loro nascite tragiche il risultato di perversione e violenza, o almeno è così che le altre razze li vedono.
+                È vero che i mezzorchi sono raramente il risultato di unioni d’amore e per questo sono costretti a crescere in fretta tra mille difficoltà, lottando spesso per difendere se stessi o per farsi un nome.
+                Temuti, mal visti e maltrattati, i mezzorchi riescono con crescente costanza a sorprendere i loro detrattori con gesta eroiche ed inattesa saggezza, benché a volte sia più facile farlo spaccando qualche cranio.
+            </p>
+            <button class="learn-more toggle">
+                <span class="circle" aria-hidden="true">
+                    <span class="icon arrow"></span>
+                </span>
+                <span class="button-text">Mostra di più</span>
+            </button>
+            <div class="hidden" id="imgMezzorchi">
+                <ul>
+                    <li><span class="parolaChiave">Descrizione fisica</span>: I mezzorchi, sia maschi che femmine, sono alti da 1,8 m a 2,1 m, con fisico potente e pelle verdastra o grigia. I loro canini crescono spesso piuttosto lunghi fino a sporgere dalle loro bocche e queste “zanne”, unite con una fronte ampia e le orecchie un po’ a punta, danno loro quell’aspetto notoriamente “bestiale”. I mezzorchi possono essere impressionanti, pochi li descrivono come belli.</li>
+                    <li><span class="parolaChiave">Società</span>: A differenza dei mezzelfi, per cui almeno parte della discriminazione della società nasce dalla gelosia o dall’attrazione, i mezzorchi ricevono il peggio di entrambi i mondi. Fisicamente più deboli degli orchi, tendono ad essere temuti o attaccati da molti umani che non si preoccupano di fare distinzione fra orchi e mezzosangue. Eppure, sebbene non siano perfettamente accettati, i mezzorchi nelle società civilizzate tendono ad essere stimati per il loro valore marziale ed i capi degli orchi sono noti per generarli intenzionalmente, poiché i mezzosangue compensano regolarmente la loro mancanza di suprema Forza fisica con una spiccata astuzia ed aggressività, diventando ottimi capi e rispettati strateghi.</li>
+                    <li><span class="parolaChiave">Rapporti</span>: Una vita di persecuzioni rende il mezzorco medio prudente e facile agli scoppi d’ira, ma chi riesce a far breccia in questo aspetto esteriore selvaggio potrebbe trovare una dose ben nascosta di empatia. Gli elfi ed i nani tendono ad essere quelli che non accettano i mezzorchi, vedendo in loro una somiglianza troppo forte con i loro nemici razziali, ma le altre razze sono molto più comprensive. Le società umane con pochi problemi con gli orchi tendono ad essere più accomodanti e i mezzorchi diventano spesso mercenari e guardie.</li>
+                    <li><span class="parolaChiave">Allineamento e religione</span>: Costretti a vivere fra i brutali orchi o come emarginati nelle terre civilizzate, i mezzorchi sono spesso amareggiati, violenti e solitari. Sono portati facilmente al male, ma non sono malvagi di natura: piuttosto, molti sono caotici neutrali, avendo imparato dalla lunga esperienza che non c’è vantaggio nel fare qualcosa se ciò non dà benefici personali diretti.</li>
+                    <li><span class="parolaChiave">Avventurieri</span>: Fieri ed indipendenti, molti mezzorchi intraprendono la via dell’avventura per necessità, cercando di fuggire da un passato doloroso o di migliorare il loro destino attraverso le proprie forze. Altri, più ottimisti o disperati di essere accettati, indossano il mantello dei crociati per dimostrare il loro valore al mondo.</li>
+                </ul>
+                <h4>Tratti Razziali</h4>
+                <ul>
+                    <li><span class="parolaChiave">+2 ad un punteggio di caratteristica</span>: I personaggi mezzorchi ricevono bonus +2 ad un punteggio di caratteristica di loro scelta al momento della creazione come prova della loro natura diversa.</li>
+                    <li><span class="parolaChiave">Taglia Media</span>: Come creature Medie, i mezzorchi non hanno bonus o penalità derivanti dalla loro taglia.</li>
+                    <li><span class="parolaChiave">Velocità normale</span>: La velocità base sul terreno dei mezzorchi è 9 metri.</li>
+                    <li><span class="parolaChiave">Scurovisione</span>: I mezzorchi possono vedere al buio fino a 18 metri.</li>
+                    <li><span class="parolaChiave">Familiarità nelle armi</span>: I mezzorchi sono competenti con l’ascia bipenne e il falchion e considerano qualsiasi arma con la parola “orchesco” nel nome come arma da guerra.</li>
+                    <li><span class="parolaChiave">Ferocia degli orchi</span>: Una volta al giorno, quando un mezzorco è ridotto a meno di zero punti ferita ma non è morto, può continuare a combattere per un round ulteriore come se fosse inabile. Alla fine del suo turno successivo, a meno che non venga riportato a punti ferita positivi, perde i sensi e inizia a morire.</li>
+                    <li><span class="parolaChiave">Intimidazione</span>: I mezzorchi hanno bonus razziale +2 alle prove di <span>Intimidire</span> grazie alla loro natura spaventosa.</li>
+                    <li><span class="parolaChiave">Sangue orchesco</span>: I mezzorchi contano sia come orchi che come umani per qualsiasi effetto relativo alla razza.</li>
+                    <li><span class="parolaChiave">Linguaggi</span>: I mezzorchi iniziano il gioco parlando Comune e Orchesco. I mezzorchi con alto punteggio di Intelligenza possono scegliere tra i seguenti linguaggi: Abissale, Draconico, Gigante, Gnoll e Goblin.</li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <h2 id="nani">Nani</h2>
+            <p>
+                I nani sono una razza stoica ma severa, nascosta in città scavate nel cuore delle montagne e determinata ferocemente a respingere le razzie delle creature selvagge come orchi e goblin.
+                Più di qualunque altra razza, i nani hanno acquisito una reputazione come artigiani taciturni e seri.
+                Si può dire che la storia dei nani abbia forgiato l’indole introversa di molti nani, data la loro abitudine a vivere su picchi quasi inaccessibili o in scuri e pericolosi regni sotterranei, costantemente in guerra con giganti, goblin ed altri orrori simili.
+            </p>
+            <button class="learn-more toggle">
+                <span class="circle" aria-hidden="true">
+                    <span class="icon arrow"></span>
+                </span>
+                <span class="button-text">Mostra di più</span>
+            </button>
+            <div class="hidden" id="imgNani">
+                <ul>
+                    <li><span class="parolaChiave">Descrizione fisica</span>: I nani sono una razza bassa e tarchiata e raggiungono un’altezza massima di circa 30 cm inferiore a quella della maggior parte degli umani, con una corporatura robusta e compatta che dà loro un aspetto massiccio. Sia i maschi che le femmine portano orgogliosamente i capelli lunghi e gli uomini decorano spesso le barbe con vari generi di fermagli e trecce intricate. Un nano maschio ben rasato è un segno sicuro di pazzia, o peggio: nessuno che sia familiare con la loro razza si fiderebbe mai di un nano senza barba.</li>
+                    <li><span class="parolaChiave">Società</span>: Le grandi distanze fra le loro cittadelle tra i monti giustificano le molteplici differenze culturali esistenti all’interno della società dei nani. Malgrado queste divergenze, tutti i nani sono noti per il loro amore nel lavorare la pietra, la loro passione per l’arte e l’architettura basate sulla pietra ed il metallo, ed un odio feroce verso giganti, orchi e goblinoidi.</li>
+                    <li><span class="parolaChiave">Rapporti</span>: I nani e gli orchi hanno abitato a lungo vicini, e la loro è una storia di odio reciproco vecchio quanto entrambe le razze. I nani generalmente diffidano dei mezzorchi e li evitano. Trovano halfling, elfi e gnomi troppo delicati, volubili o “graziosi” per essere degni di rispetto. È con gli umani che i nani condividono un più forte Legame, dato che la natura industriosa e la brama sincera degli umani si avvicinano di più a quelle dell’ideale nanico.</li>
+                    <li><span class="parolaChiave">Allineamento e religione</span>: I nani sono guidati da onore e tradizione. Sono spesso visti come alteri, ma hanno un forte sentimento di amicizia e giustizia e chi si guadagna la loro fiducia capisce che, anche se lavorano sodo, scherzano ancora più accanitamente, specie davanti ad una buona birra. I nani sono per lo più legali buoni.</li>
+                    <li><span class="parolaChiave">Avventurieri</span>: Anche se i nani avventurieri sono rari rispetto agli umani, si possono trovare quasi ovunque. I nani spesso abbandonano i confini dei loro rifugi per cercare gloria per i loro clan, ricchezze con cui abbellire le case-fortezze della loro famiglia, o per rivendicare cittadelle di nani preda dei nemici razziali. Le tecniche di guerra dei nani sono caratterizzate spesso da combattimenti in stretti cunicoli e in mischia, e per questo i nani tendono a diventare guerrieri e barbari.</li>
+                </ul>
+                <h4>Tratti Razziali</h4>
+                <ul>
+                    <li><span class="parolaChiave" onclick="redirectToCos()">Costituzione +2</span>, <span class="parolaChiave" onclick="redirectToSag()">Saggezza +2</span>, <span class="parolaChiave" onclick="redirectToCar()">Carisma –2</span>: I nani sono sia robusti che saggi, ma un po’ burberi.</li>
+                    <li><span class="parolaChiave">Taglia Media</span>: Come creature Medie, i nani non hanno bonus o penalità derivanti dalla loro taglia.</li>
+                    <li><span class="parolaChiave">Lenti e saldi</span>: La velocità base sul terreno dei nani è 6 metri, ma la loro velocità non viene mai modificata dall’armatura o dall’ingombro.</li>
+                    <li><span class="parolaChiave">Scurovisione</span>: I nani possono vedere al buio fino a 18 metri.</li>
+                    <li><span class="parolaChiave">Addestramento difensivo</span>: I nani hanno bonus di schivare +4 alla <span>CA</span> contro i mostri del sottotipo gigante.</li>
+                    <li><span class="parolaChiave">Cupidigia</span>: I nani hanno bonus razziale +2 alle prove di <span>Valutare</span> effettuate per determinare il prezzo di beni non di natura magica che contengono metalli preziosi o gemme.</li>
+                    <li><span class="parolaChiave">Esperto minatore</span>: I nani hanno bonus razziale +2 alle prove di <span>Percezione</span> per individuare strane opere in muratura, come trappole e porte segrete situate su muri o pavimenti di pietra. Ogni volta che i nani passano a meno di 3 metri da queste opere possono effettuare tale prova, anche se non le stanno effettivamente cercando.</li>
+                    <li><span class="parolaChiave">Odio</span>: I nani hanno bonus +1 ai tiri per colpire contro creature umanoidi del sottotipo orco e goblin grazie allo speciale addestramento verso questi odiati nemici.</li>
+                    <li><span class="parolaChiave">Familiarità nelle armi</span>: I nani sono competenti con le asce da guerra, i martelli da guerra e i picconi pesanti e considerano qualsiasi arma con la parola “nanico” nel nome come arma da guerra.</li>
+                    <li><span class="parolaChiave">Resistenza</span>: I nani ricevono bonus razziale +2 ai <span>Tiri Salvezza</span> contro veleni, incantesimi e Capacità Magiche.</li>
+                    <li><span class="parolaChiave">Stabilità</span>: I nani ricevono bonus razziale +4 alla <span>DMC</span> quando devono resistere ai tentativi di spingere e sbilanciare mentre sono saldi sul terreno.</li>
+                    <li><span class="parolaChiave">Linguaggi</span>: Comune e Nanico. I nani con un alto punteggio di Intelligenza possono scegliere fra i seguenti linguaggi: Gigante, Gnomesco, Goblin, Orchesco, Terran, Sottocomune.</li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <h2 id="umani">Umani</h2>
+            <p>
+                Gli umani possiedono un’eccezionale spinta ed una grande capacità di resistere ed espandersi e pertanto sono attualmente la razza dominante nel mondo.
+                I loro imperi e nazioni sono ampi e in espansione ed i cittadini di queste società scolpiscono i loro nomi con la Forza delle armi ed il potere dei loro incantesimi.
+                L’umanità è meglio caratterizzata dalla sua turbolenza e diversità e le culture umane vanno dalle tribù selvagge, ma dai rigidi codici d’onore, alle famiglie nobili decadenti e adoratrici di demoni nelle città più cosmopolite.
+                La curiosità e l’ambizione umane trionfano spesso sulla predilezione per uno stile di vita sedentario e molti lasciano le loro case per esplorare i numerosi angoli dimenticati del mondo o per condurre potenti eserciti per conquistare i vicini, semplicemente perché possono.
+            </p>
+            <button class="learn-more toggle">
+                <span class="circle" aria-hidden="true">
+                    <span class="icon arrow"></span>
+                </span>
+                <span class="button-text">Mostra di più</span>
+            </button>
+            <div class="hidden" id="imgUmani">
+                <ul>
+                    <li><span class="parolaChiave">Descrizione fisica</span>: Le caratteristiche fisiche degli umani sono varie quanto i climi del mondo. Dalle tribù dalla carnagione scura dei continenti meridionali ai razziatori pallidi e barbari delle regioni settentrionali, gli umani possiedono una grande varietà di colori di pelle, corporature e lineamenti. In linea generale, il colore di pelle degli umani presuppone una tonalità più scura più vicino all’equatore.</li>
+                    <li><span class="parolaChiave">Società</span>: La società umana comprende molteplici tipi di governi, atteggiamenti e stili di vita. Benché le più vecchie culture umane traccino le loro storie migliaia di anni nel passato, a confronto con le società delle razze comuni come elfi e nani, sembra che le società umane siano in una condizione di cambiamento continuo mentre gli imperi si dividono e nuovi regni prendono il posto dei vecchi. Gli umani sono noti generalmente per la loro flessibilità, ingegnosità ed ambizione.</li>
+                    <li><span class="parolaChiave">Rapporti</span>: Gli umani sono fecondi e il loro impeto e numero li stimolano spesso al contatto con altre razze durante i periodi di espansione e di colonizzazione territoriali. In molti casi, questo porta alla violenza ed alla guerra, tuttavia gli umani sono egualmente rapidi a perdonare e forgiare alleanze con le razze che non tentano di eguagliarli o superarli in violenza. Fieri, a volte al punto di essere arroganti, gli umani considerano i nani come ubriaconi avari, gli elfi come sciocchi e frivoli, gli halfling come ladri e vigliacchi, gli gnomi come maniaci e bizzarri, e mezzelfi e mezzorchi come imbarazzanti, ma le diversità intrinseche nella razza rendono gli umani abbastanza aperti ad accettare ugualmente gli altri per quello che sono.</li>
+                    <li><span class="parolaChiave">Allineamento e religione</span>: L’umanità è forse la più eterogenea di tutte le razze comuni, con una capacità di perseguire il male e il bene fino al massimo grado. Alcuni si radunano in grandi orde barbariche, mentre altri costruiscono enormi città che si espandono per diversi chilometri. Presi complessivamente, gli umani sono di allineamento neutrale, tuttavia tendono generalmente ad unirsi in nazioni e civiltà con allineamenti specifici. Gli umani inoltre hanno la gamma più vasta di divinità e religioni, non essendo legati come le altre razze alla tradizione e desiderosi di rivolgersi verso chiunque offra loro gloria o protezione.</li>
+                    <li><span class="parolaChiave">Avventurieri</span>: L’ambizione da sola guida gli innumerevoli umani e per molti l’avventura è un mezzo per un proprio fine, possa essere ricchezza, potere, status sociale o conoscenza arcana. Alcuni diventano avventurieri solo per l’emozione del pericolo. Gli umani provengono da miriadi di regioni e ambienti e pertanto si adattano bene ad ogni ruolo in un gruppo.</li>
+                    <li><span class="parolaChiave">Nomi</span>: A differenza delle altre razze, che in genere si rifanno a tradizioni e storie specifiche comuni, la diversità dell’umanità ha portato ad un insieme quasi infinito di nomi. Gli umani di una tribù barbara settentrionale hanno nomi molto differenti da quelli che provengono da una nazione subtropicale di marinai e commercianti. In quasi tutto il mondo gli umani parlano il Comune, ma i loro nomi sono vari quanto le loro credenze e il loro aspetto.</li>
+                </ul>
+                <h4>Tratti Razziali</h4>
+                <ul>
+                    <li><span class="parolaChiave">+2 ad un punteggio di caratteristica</span>: I personaggi umani ricevono bonus +2 ad un punteggio di caratteristica di loro scelta al momento della creazione come prova della loro natura diversa.</li>
+                    <li><span class="parolaChiave">Taglia Media</span>: Come creature Medie, gli umani non hanno bonus o penalità derivanti dalla loro taglia.</li>
+                    <li><span class="parolaChiave">Velocità normale</span>: La velocità base sul terreno degli umani è 9 metri.</li>
+                    <li><span class="parolaChiave">Talento bonus</span>: Gli umani scelgono un talento addizionale al 1° livello.</li>
+                    <li><span class="parolaChiave">Esperti</span>: Gli umani ottengono 1 grado di <span>Abilità</span> aggiuntivo al 1° livello e 1 grado aggiuntivo ogni volta che avanzano di livello.</li>
+                    <li><span class="parolaChiave">Linguaggi</span>: Gli umani iniziano il gioco parlando Comune. Gli umani con un alto punteggio di Intelligenza possono scegliere tutti i linguaggi che vogliono (tranne i linguaggi segreti, come il Druidico).</li>
+                </ul>
+            </div>
+        </div>       
+    </div>
+</section>
+
+@section scripts{
+    <script type="text/javascript">
+        document.querySelectorAll('.toggle').forEach(item => {
+            item.addEventListener('click', event => {
+                const contentDiv = event.currentTarget.nextElementSibling;
+                const buttonText = event.currentTarget.querySelector('.button-text');
+
+                if (contentDiv.classList.contains('hidden')) {
+                    contentDiv.classList.remove('hidden');
+                    buttonText.textContent = 'Mostra meno';
+                } else {
+                    contentDiv.classList.add('hidden');
+                    buttonText.textContent = 'Mostra di più';
+                }
+            });
+        });
+        
+    </script>
+    }
+
+

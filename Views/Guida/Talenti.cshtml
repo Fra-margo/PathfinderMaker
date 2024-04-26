@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Talenti";
+}
+
+<section class="sectionPage">
+    <div class="sidebar">
+        <div class="nav">
+            <ul id="imgMago">
+                <li>@Html.ActionLink("Punteggi di Caratteristica", "Caratteristiche", "Guida", new { area = "" })</li>
+                <li>@Html.ActionLink("Razze", "Razze", "Guida", new { area = "" })</li>
+                <li >@Html.ActionLink("Classi", "Classi", "Guida", new { area = "" })</li>
+                <li>@Html.ActionLink("Abilità", "Abilita", "Guida", new { area = "" })</li>
+                <li class="active">@Html.ActionLink("Talenti", "Talenti", "Guida", new { area = "" })</li>
+            </ul>
+        </div>
+    </div>
+    <div class="rightContainer" id="imgGolem">
+        <div>
+            <h1>Talenti</h1>
+            <p>
+                Alcuni attributi dei personaggi non sono legati a @Html.ActionLink("razza", "Razze", "Guida", new { area = "" }, new { @class = "parolaChiave" }), @Html.ActionLink("classe", "Classi", "Guida", new { area = "" }, new { @class = "parolaChiave" }) o @Html.ActionLink("abilità", "Abilita", "Guida", new { area = "" }, new { @class = "parolaChiave" }): ad esempio la rapidità dei riflessi che permette di reagire al pericolo molto velocemente, la capacità di realizzare oggetti magici,
+                l’addestramento per vibrare colpi con estrema potenza con armi da mischia, o l’abilità di deviare le frecce.
+                Queste capacità sono rappresentate dai <span class="parolaChiave">talenti</span>. Mentre alcuni talenti sono più utili ad alcuni tipi di personaggi piuttosto che ad altri,
+                e molti di essi hanno dei prerequisiti speciali che bisogno soddisfare prima di poterli scegliere, come regola generale, i <span class="parolaChiave">talenti</span> rappresentano tutte quelle capacità che esulano dagli scopi normali della razza e della classe del personaggio.
+                Molti alterano o migliorano i privilegi di classe o ne attenuano le restrizioni, mentre altri possono conferire bonus alle statistiche o la possibilità di effettuare azioni altrimenti proibite.
+                Scegliendo i talenti, i giocatori possono adattare il proprio personaggio in modo da renderlo assolutamente unico.
+            </p>
+        </div>
+        <div>
+            <p class="pdfText">Questa sezione è ancora incompleta, presto sarà disponibile la lista di tutti i talenti</p>
+        </div>
+    </div>
+</section>
+

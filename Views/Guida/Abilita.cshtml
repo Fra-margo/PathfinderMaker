@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewBag.Title = "Abilita";
+}
+
+<section class="sectionPage">
+    <div class="sidebar">
+        <div class="nav">
+            <ul id="imgMago">
+                <li>@Html.ActionLink("Punteggi di Caratteristica", "Caratteristiche", "Guida", new { area = "" })</li>
+                <li>@Html.ActionLink("Razze", "Razze", "Guida", new { area = "" })</li>
+                <li>@Html.ActionLink("Classi", "Classi", "Guida", new { area = "" })</li>
+                <li class="active">@Html.ActionLink("Abilità", "Abilita", "Guida", new { area = "" })</li>
+                <li >@Html.ActionLink("Talenti", "Talenti", "Guida", new { area = "" })</li>                
+            </ul>
+        </div>
+    </div>
+    <div class="rightContainer">
+        <div>
+            <h1>Abilità</h1>
+            <p>Le Abilità rappresentano una serie di capacità fondamentali che il personaggio possiede, acquisisce e sviluppa sempre di più man mano che avanza di livello.</p>
+        </div>
+        <div>
+            <h4>Acquistire le Abilità</h4>
+            <p>
+                Ad ogni livello, i personaggi ottengono un certo numero di gradi di abilità in base alla @Html.ActionLink("classe", "Classi", "Guida", new { area = "" }, new { @class = "parolaChiave" }) più il loro modificatore di <span class="parolaChiave" onclick="redirectToInt()">Intelligenza</span>.
+                Investire un grado in un’abilità rappresenta una misura dell’addestramento in quell’abilità. Non si possono avere più gradi in un’abilità dei propri <span class="parolaChiave">Dadi Vita</span> totali.
+                Inoltre, ogni @Html.ActionLink("classe", "Classi", "Guida", new { area = "" }, new { @class = "parolaChiave" })> ha delle abilità preferite, chiamate abilità di classe, in cui eccelle facilmente, poiché fanno parte del suo addestramento.
+                Si ottiene bonus +3 a tutte le abilità di classe in cui è stato messo almeno un grado. Se si hanno più @Html.ActionLink("classi", "Classi", "Guida", new { area = "" }, new { @class = "parolaChiave" }) che concedono un bonus ad un’abilità di classe, questi bonus non si cumulano.
+            </p>
+        </div>
+        <div>
+            <table class="centeredTable">
+                <thead>
+                    <tr>
+                        <th>Classe</th>
+                        <th>Gradi di Abilità per livello</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Barbaro</td>
+                        <td>4 + modificatore di Int</td>
+                    </tr>
+                    <tr>
+                        <td>Bardo</td>
+                        <td>6 + modificatore di Int</td>
+                    </tr>
+                    <tr>
+                        <td>Chierico</td>
+                        <td>2 + modificatore di Int</td>
+                    </tr>
+                    <tr>
+                        <td>Druido</td>
+                        <td>4 + modificatore di Int</td>
+                    </tr>
+                    <tr>
+                        <td>Guerriero</td>
+                        <td>2 + modificatore di Int</td>
+                    </tr>
+                    <tr>
+                        <td>Ladro</td>
+                        <td>8 + modificatore di Int</td>
+                    </tr>
+                    <tr>
+                        <td>Mago</td>
+                        <td>2 + modificatore di Int</td>
+                    </tr>
+                    <tr>
+                        <td>Monaco</td>
+                        <td>4 + modificatore di Int</td>
+                    </tr>
+                    <tr>
+                        <td>Paladino</td>
+                        <td>2 + modificatore di Int</td>
+                    </tr>
+                    <tr>
+                        <td>Ranger</td>
+                        <td>6 + modificatore di Int</td>
+                    </tr>
+                    <tr>
+                        <td>Stregone</td>
+                        <td>2 + modificatore di Int</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="mt-3">
+            <h4>Prove di Abilità</h4>
+            <p>
+                Quando si usa un’<span class="parolaChiave">Abilità</span>, il successo non è garantito. Per determinare il successo, ogni volta che si tenta di usare un’abilità bisogna effettuare una <span class="parolaChiave">prova di abilità</span>.
+                Ogni grado di abilità garantisce bonus +1 alle prove effettuate per usare quell’abilità. Quando si effettua una prova di abilità, si tira 1d20 e si aggiungono i gradi e il modificatore della caratteristica appropriata al risultato della prova.
+                Se l’abilità che si sta usando è un’abilità di classe (e sono stati investiti gradi in essa), si ottiene bonus +3 alla prova. Se non si è addestrati nell’abilità (e se l’abilità può essere utilizzata senza addestramento),
+                si può sempre tentare di usare l’abilità, ma si applicano solo il bonus (o la penalità) concessa dal modificatore di caratteristica appropriato per modificare il risultato della prova.
+                Le abilità possono subire ulteriori modifiche da altre fonti, come @Html.ActionLink("razza", "Razze", "Guida", new { area = "" }, new { @class = "parolaChiave" }), privilegi di @Html.ActionLink("classe", "Classi", "Guida", new { area = "" }, new { @class = "parolaChiave" }), equipaggiamento, incantesimi o oggetti magici, e così via.
+            </p>
+        </div>
+        <div>
+            <p class="pdfText">Questa sezione è ancora incompleta, presto sarà disponibile la lista di tutte le abilità.</p>
+        </div>
+    </div>
+</section>
+

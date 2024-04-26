@@ -1,0 +1,82 @@
+﻿@using Pathfinder.Models
+@model List<Personaggi>
+
+@{
+    ViewBag.Title = "I tuoi Personaggi";
+}
+<main>
+    <div id="divTopPgUtente">
+        <h1 class="mainColor">I tuoi Personaggi</h1>
+        <button id="btnIndietro">@Html.ActionLink("Torna indietro", "Index", "Personaggi", new { area = "" })</button>
+    </div>
+
+    @if (Model.Any())
+    {
+        <div class="table-wrapper">
+            <table class="fl-table">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Razza</th>
+                        <th>Classe</th>
+                        <th>Forza</th>
+                        <th>Destrezza</th>
+                        <th>Costituzione</th>
+                        <th>Intelligenza</th>
+                        <th>Saggezza</th>
+                        <th>Carisma</th>
+                        <th>PuntiVita</th>
+                        <th>Livello</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var personaggio in Model)
+                    {
+                        <tr>
+                            <td>@personaggio.Nome</td>
+                            <td>@personaggio.Razze.Tipologia</td>
+                            <td>@personaggio.Classi.Nome</td>
+                            <td>@personaggio.Forza</td>
+                            <td>@personaggio.Destrezza</td>
+                            <td>@personaggio.Costituzione</td>
+                            <td>@personaggio.Intelligenza</td>
+                            <td>@personaggio.Saggezza</td>
+                            <td>@personaggio.Carisma</td>
+                            <td>@personaggio.PuntiVita</td>
+                            <td>@personaggio.Livello</td>
+                            <td>
+                                <button type="button" class="btn btn-danger btnElimina" data-toggle="modal" data-target="#eliminaModal-@personaggio.IdPg">
+                                    Elimina
+                                </button>
+                                <div class="modal fade" id="eliminaModal-@personaggio.IdPg" tabindex="-1" role="dialog" aria-labelledby="eliminaModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="eliminaModalLabel">Conferma Eliminazione</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Sei sicuro di voler eliminare questo personaggio?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
+                                                <a href="@Url.Action("EliminaPersonaggio", new { idPg = personaggio.IdPg })" class="btn btn-danger">Elimina</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <p class="welcome noPg">Non hai nessun personaggio. @Html.ActionLink("Prova a farne uno!", "Create", "Personaggi", new { area = "" })</p>
+    }
+</main>
